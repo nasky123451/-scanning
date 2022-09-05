@@ -250,7 +250,7 @@ function create_manage_user(row, id){
         '</div>'+
     '</div>';
 
-    $('body').append(append_str);
+    //$('body').append(append_str);
     ClearPopupEvent();
 }
 
@@ -302,7 +302,7 @@ async function popup_add_user(){
     });*/
 
     var user = {user:document.getElementById("name").innerHTML, name:name, id:number, password:password, userpermissions:permissions};
-    $.post('/adduser', user, function(result, statusText, xhr) {
+    /*$.post('/adduser', user, function(result, statusText, xhr) {
         if (result.status == -1){
             Swal.fire({
                 icon: 'warning',
@@ -319,7 +319,7 @@ async function popup_add_user(){
         }
 
         
-    });
+    });*/
 
 }
 
@@ -340,7 +340,7 @@ async function popup_modify(){
     });*/
 
     var user = {username:btoa(document.getElementById("username").innerHTML), password:password};
-    $.post('/checkpass', user, function(result, statusText, xhr) {
+    /*$.post('/checkpass', user, function(result, statusText, xhr) {
         if (result.status == -1){
             Swal.fire({
                 icon: 'warning',
@@ -354,7 +354,7 @@ async function popup_modify(){
         }
 
         
-    });
+    });*/
 }
 
 async function popup_modify_user(){
@@ -378,7 +378,7 @@ async function popup_modify_user(){
     });*/
 
     var user = {name:document.getElementById("name").innerHTML, username:btoa(document.getElementById("username").innerHTML), password:password};
-    $.post('/modifypass', user, function(result, statusText, xhr) {
+    /*$.post('/modifypass', user, function(result, statusText, xhr) {
         if (result.status == -1){
             Swal.fire({
                 icon: 'warning',
@@ -392,7 +392,7 @@ async function popup_modify_user(){
         }
 
         
-    });
+    });*/
 }
 
 async function popup_manage_modify_user(id){
@@ -421,7 +421,7 @@ async function popup_manage_modify_user(id){
     });*/
 
     var user = {user:document.getElementById("name").innerHTML, id:id, name:name, username:number, password:password, userpermissions:permissions};
-    $.post('/modifyAuth', user, function(result, statusText, xhr) {
+    /*$.post('/modifyAuth', user, function(result, statusText, xhr) {
         if (result.status == -1){
             Swal.fire({
                 icon: 'warning',
@@ -439,7 +439,7 @@ async function popup_manage_modify_user(id){
         }
 
         
-    });
+    });*/
 }
 
 async function popup_delete(){
@@ -459,7 +459,7 @@ async function popup_delete(){
     });*/
 
     var user = {name:document.getElementById("name").innerHTML, username:btoa(document.getElementById("username").innerHTML), password:password};
-    $.post('/checkpass', user, function(result, statusText, xhr) {
+    /*$.post('/checkpass', user, function(result, statusText, xhr) {
         if (result.status == -1){
             Swal.fire({
                 icon: 'warning',
@@ -473,7 +473,7 @@ async function popup_delete(){
         }
 
         
-    });
+    });*/
 }
 
 function create_Delete_User(password){
@@ -515,7 +515,7 @@ function popup_add_pass(){
     }
 
     var user = {licence:licence, site:site};
-    $.post('/addpass', user, function(result, statusText, xhr) {
+    /*$.post('/addpass', user, function(result, statusText, xhr) {
         if (result.status == -1){
             Swal.fire({
                 icon: 'warning',
@@ -534,7 +534,7 @@ function popup_add_pass(){
         }
 
         
-    });
+    });*/
 
 }
 
@@ -549,7 +549,7 @@ function popup_message(){
 
     //console.log(username);
     var user = {username:username};
-    $.post('/forgotpwd', user, function(result, statusText, xhr) {
+    /*$.post('/forgotpwd', user, function(result, statusText, xhr) {
         if (result.status == -1){
             Swal.fire({
                 icon: 'warning',
@@ -566,7 +566,7 @@ function popup_message(){
         }
 
         
-    });
+    });*/
 }
 
 function OpenModal() {

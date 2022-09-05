@@ -20,7 +20,7 @@ function ShowChart(name){
     StartTime = moment().format('YYYY-MM-01T00:00');
     
     searchPara = {name:"", starttime:StartTime, endtime:EndTime, interval:document.getElementById("datetime").value};
-    $.get('/getCountStatistics', searchPara, function(data, statusText, xhr){
+    /*$.get('/getCountStatistics', searchPara, function(data, statusText, xhr){
         if (xhr.status == 200){
             if (!data){
                 //alert("查無結果!");
@@ -33,7 +33,7 @@ function ShowChart(name){
             ChartresultData = data;
             updateChart(name);
         }
-    }); 
+    }); */
 }
 function SumData(arr){
     var sum=0;
@@ -95,7 +95,7 @@ function updateChart(name){
 function ShowSelectChart(){
     Element = $('#form').serializeArray();
     var searchPara = {name:document.getElementById("name").innerHTML, starttime:Element[1].value, endtime:Element[2].value, interval:Element[3].value};
-    $.get('/getCountStatistics', searchPara, function(data, statusText, xhr){
+    /*$.get('/getCountStatistics', searchPara, function(data, statusText, xhr){
         if (xhr.status == 200){
             if (!data){
                 //alert("查無結果!");
@@ -109,7 +109,7 @@ function ShowSelectChart(){
             UpdateSelectChart(Element[0].value);
             
         }
-    }); 
+    }); */
 }
 function UpdateSelectChart(site){
     //清除舊資料並賦予新屬性
@@ -588,12 +588,12 @@ async function exportTextFile(){
 
 async function getLicenceData(){
     var csvdata = "";
-    await $.get('/getLicnece', function(data, statusText, xhr){
+    /*await $.get('/getLicnece', function(data, statusText, xhr){
         if (xhr.status == 200){
             //console.log(data);
             csvdata = returnLicenceData(data);
         }
-    });
+    });*/
     return csvdata;
 }
 

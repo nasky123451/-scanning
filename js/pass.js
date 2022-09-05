@@ -38,7 +38,7 @@ function search_licence(){
 
 function GetPass(passsite, passlicence){
     var searchPara = {site:passsite, licence:passlicence}
-    $.post('/getPass', searchPara, function(data, statusText, xhr){
+    /*$.post('/getPass', searchPara, function(data, statusText, xhr){
         if (xhr.status == 200){
             if (!data){
                 //alert("查無結果!");
@@ -48,7 +48,7 @@ function GetPass(passsite, passlicence){
             CreatePassbar(data, passsite);
             //updateNextBar(data);
         }
-    });
+    });*/
 }
 
 function ClearAllPassbar(){
@@ -88,7 +88,7 @@ function addA(li,text,id,site){
     var div_node = li.appendChild(div_1);
     var span_1=document.createElement("a");
     span_1.setAttribute("class","gap-3 nav-item nav-link pr-4");
-    span_1.innerHTML=text;
+    //span_1.innerHTML=text;
     div_node.appendChild(span_1);
     var img_1=document.createElement("img");
     img_1.setAttribute("src","resources/minus.png");
@@ -99,14 +99,14 @@ function addA(li,text,id,site){
     var btn_1=document.createElement("button");
     btn_1.setAttribute("type","button");
     btn_1.setAttribute("class","btn");
-    btn_1.setAttribute("onclick","delPass("+id+","+site+")");
+    //btn_1.setAttribute("onclick","delPass("+id+","+site+")");
     btn_1.setAttribute("style","position:absolute; right:0;");
     div_node.appendChild(btn_1);
 }
 
 function delPass(id,site){
     var searchPara = {id:id}
-    $.post('/delPass', searchPara, function(data, statusText, xhr){
+    /*$.post('/delPass', searchPara, function(data, statusText, xhr){
         if (xhr.status == 200){
             if (!data){
                 //alert("查無結果!");
@@ -115,7 +115,7 @@ function delPass(id,site){
             ClearPassbar(site);
             GetPass(site, "");
         }
-    });
+    });*/
 }
 
 $(function () {

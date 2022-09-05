@@ -14,7 +14,7 @@ function ShowResultDiv(){
     startDate = now.add(-1, 'D').format('YYYY-MM-DDT') + "00:00:00";
 
     var searchPara = {name:"", starttime:startDate, endtime:endDate, site:"", category:"", success:"1"};
-    $.get('/getRecords', searchPara, function(data, statusText, xhr){
+    /*$.get('/getRecords', searchPara, function(data, statusText, xhr){
         if (xhr.status == 200){
             if (!data){
                 alert("查無結果!");
@@ -33,7 +33,7 @@ function ShowResultDiv(){
             $("#ResultDiv").show();
             updateRangeTime();
         }
-    });
+    });*/
 }
 
 function UpdateResultDiv(){
@@ -41,7 +41,7 @@ function UpdateResultDiv(){
     var endtime = tablerangetime.split('~')[1];
     var searchPara = {name:document.getElementById("name").innerHTML, starttime:starttime, endtime:endtime, site:site, category:category, licence:licence, success:"1"};
 
-    $.get('/getRecords', searchPara, function(data, statusText, xhr){
+    /*$.get('/getRecords', searchPara, function(data, statusText, xhr){
         if (xhr.status == 200){
             if (!data){
                 alert("查無結果!");
@@ -59,7 +59,7 @@ function UpdateResultDiv(){
             $("#ResultDiv").show();
             updateRangeTime();
         }
-    });
+    });*/
 }
 
 var CountofPage = 10;
@@ -74,12 +74,15 @@ function updateResult(data, page){
     // Create result data.
     var rowElements = data.map(function (row, index) {
         if ((CountofPage * (page - 1) <= index) && (index < CountofPage * page)){
-            var $tbody = $('<tbody id="'+row.id+'"></tobdy>');
+            var idNode = row.id;
+            var $tbody = $('<tbody id="'+idNode+'"></tobdy>');
             var $rowdata = $('<tr data-toggle="collapse" data-target=".toogle' + index + '"></tr>');
 
             var $index = $('<td></td>').html(index + 1);
-            var $site = $('<td></td>').html(row.site);
-            var $licence = $('<td></td>').html('<input type="text" class="form-control" style="min-width: 100px;" value="'+row.licence+'">');
+            var siteNode = row.site;
+            var $site = $('<td></td>').html(siteNode);
+            var licenceNode = row.licence;
+            var $licence = $('<td></td>').html('<input type="text" class="form-control" style="min-width: 100px;" value="'+licenceNode+'">');
 
             var category_str = "";
             category_str +='<div class="pt-3 pb-3" style="min-width: 200px;">'+
@@ -122,22 +125,23 @@ function updateResult(data, page){
                             '</div>';
 
             var $color = $('<td></td>').html(color_str);
-            var $time = $('<td></td>').html(row.time);
+            //var $time = $('<td></td>').html(row.time);
 
             var nowtime = "";
             nowtime = row.time.replaceAll('-', '');
             nowtime = nowtime.replaceAll(' ', '');
             nowtime = nowtime.replaceAll(':', '');
             if (row.success == "1"){
-                var $send = $('<td><div><a href="javascript:send_success(' + row.id + ', ' + nowtime + ', ' + index + ')" download="" style="pointer-events: none; color: #000;"><i class="fas fa-check"></i></div></td>');
+                var $send = $('<td><div><a href="javascript:send_success(' + idNode + ', ' + nowtime + ', ' + index + ')" download="" style="pointer-events: none; color: #000;"><i class="fas fa-check"></i></div></td>');
             }else {
-                var $send = $('<td><div><a href="javascript:send_success(' + row.id + ', ' + nowtime + ', ' + index + ')" download=""><i class="fas fa-check"></i></div></td>');
+                var $send = $('<td><div><a href="javascript:send_success(' + idNode + ', ' + nowtime + ', ' + index + ')" download=""><i class="fas fa-check"></i></div></td>');
             }
 
             $rowdata.append($site, $licence, $category, $color, $time, $send);
             
             var $coiledimg = $('<tr></tr>');
-            var $imgs = $('<td colspan="7"></td>').html('<div class="d-flex justify-content-around align-items-center"><div class="d-flex align-items-center justify-content-center records-block">即時截圖畫面</div><img src="' + row.path + '/0.jpg?t=' + moment() + '" loading="lazy" width = "500px"></div>' );
+            var pathNode = row.path;
+            var $imgs = $('<td colspan="7"></td>').html('<div class="d-flex justify-content-around align-items-center"><div class="d-flex align-items-center justify-content-center records-block">即時截圖畫面</div><img src="' + pathNode + '/0.jpg?t=' + moment() + '" loading="lazy" width = "500px"></div>' );
 
             $coiledimg.append($imgs);
             $tbody.append($rowdata, $coiledimg);
@@ -147,7 +151,8 @@ function updateResult(data, page){
 
     $("table[name='result']").append(rowElements);
 
-    updatePagination(data.length, page);
+    var lengthNode = data.length;
+    updatePagination(lengthNode, page);
 }
 function updateResultThead(){
     // Create header.
@@ -320,7 +325,7 @@ function send_success(id, intime, index){
     //console.log(resultData[index].success);
 
     var searchPara = {id:id, site:resultData[index].site , type:document.getElementById(id).querySelectorAll('select')[0].value, licnece:document.getElementById(id).querySelector('input').value, color:document.getElementById(id).querySelectorAll('select')[1].value, time:outtime}
-    $.post('/updateRecord', searchPara, function(data, statusText, xhr){
+    /*$.post('/updateRecord', searchPara, function(data, statusText, xhr){
         if (xhr.status == 200){
             if (!data){
                 //alert("查無結果!");
@@ -329,11 +334,11 @@ function send_success(id, intime, index){
             document.getElementById(id).getElementsByTagName("a")[0].style = "pointer-events: none; color: #000;";
             resultData[index].success = "1";
         }
-    });
+    });*/
 }
 
 function GetRetetion(){
-    $.get('/getRetention', function(data, statusText, xhr){
+    /*$.get('/getRetention', function(data, statusText, xhr){
         if (xhr.status == 200){
             if (!data){
                 //alert("查無結果!");
@@ -341,27 +346,29 @@ function GetRetetion(){
             }
             ShowRetetion(data);
         }
-    });
+    });*/
 }
 
 function ShowRetetion(data){
     data.map(function (row, index) {
+        var nameNode = row.name;
         var retention_str = '<div class="d-flex align-items-center justify-content-between p-3">'+
-                                '<div class="pr-3"><nobr><span>'+row.name+'</span></nobr></div>';
+                                '<div class="pr-3"><nobr><span>'+nameNode+'</span></nobr></div>';
 
         retention_str += '<div class="p-3"><select class="form-control styled-select" style="min-width: 80px;">';                             
 
-        if (row.retention >= 100 ){
+        var retentionNode = row.retention;
+        if (retentionNode >= 100 ){
             retention_str += '<option selected="selected" value="150">擁擠</option>';         
         }else {
             retention_str += '<option value="150">擁擠</option>';     
         }
-        if (row.retention >= 50 && row.retention < 100){
+        if (retentionNode >= 50 && retentionNode < 100){
             retention_str += '<option selected="selected" value="60">普通</option>'; 
         } else {
             retention_str += '<option value="60">普通</option>';
         }
-        if (row.retention < 50 ){
+        if (retentionNode < 50 ){
             retention_str += '<option selected="selected" value="0">寬鬆</option>';
         } else{
             retention_str += '<option value="0">寬鬆</option>';
@@ -388,7 +395,7 @@ function update_retention(){
                     seven_retention:document.getElementById("retention_bar").querySelectorAll('select')[6].value,
                     eight_retention:document.getElementById("retention_bar").querySelectorAll('select')[7].value,
                     nine_retention:document.getElementById("retention_bar").querySelectorAll('select')[8].value};
-    $.get('/updateRetention', searchPara, function(data, statusText, xhr){
+    /*$.get('/updateRetention', searchPara, function(data, statusText, xhr){
         if (xhr.status == 200){
             if (!data){
                 //alert("查無結果!");
@@ -399,5 +406,5 @@ function update_retention(){
                 text: "更新完成",
             }) 
         }
-    });
+    });*/
 }

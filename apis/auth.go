@@ -429,8 +429,9 @@ func GetAuth(c *gin.Context) {
 		c.HTML(http.StatusOK, "login.html", gin.H{
 			"message": "帳號或密碼錯誤！", "counter": counter,
 		})
+		PD := password
 		path := "C:/log/登入異常"
-		message := "(登入失敗)輸入帳號:" + username + "輸入密碼:" + password + "用戶IP:" + get_ip() + "時間:" + time.Now().Format("2006-01-02 15:04:05") + "\n"
+		message := "(登入失敗)輸入帳號:" + username + "輸入密碼:" + PD + "用戶IP:" + get_ip() + "時間:" + time.Now().Format("2006-01-02 15:04:05") + "\n"
 		message += "====================================================================\n"
 		Writelog(path, message)
 	}

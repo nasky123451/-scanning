@@ -9,7 +9,7 @@ var resultData;
 
 function ShowResultDiv(){
 
-    $.get('/getAuthList', function(data, statusText, xhr){
+    /*$.get('/getAuthList', function(data, statusText, xhr){
         if (xhr.status == 200){
             if (!data){
                 alert("查無結果!");
@@ -25,7 +25,7 @@ function ShowResultDiv(){
             
             $("#ResultDiv").show();
         }
-    });
+    });*/
 }
 
 function updateResult(data, page){
@@ -38,10 +38,13 @@ function updateResult(data, page){
             var $rowdata = $('<tr data-toggle="collapse" data-target=".toogle' + index + '"></tr>');
 
             var $index = $('<td></td>').html(index + 1);
-            var $name = $('<td></td>').html(row.name);
-            var $username = $('<td></td>').html(row.username);
-            var $modify = $('<td><div><a href="javascript:modify_user(' + row.id + ')" download=""><i class="fas fa-pencil-alt"></i></a></div></td>');
-            var $delete = $('<td><div><a href="javascript:delete_user(' + row.id + ')" download=""><i class="fas fa-trash"></i></a></div></td>');
+            var nameNode = row.name;
+            var $name = $('<td></td>').html(nameNode);
+            var usernameNode = row.username;
+            var $username = $('<td></td>').html(usernameNode);
+            var idNode = row.id;
+            var $modify = $('<td><div><a href="javascript:modify_user(' + idNode + ')" download=""><i class="fas fa-pencil-alt"></i></a></div></td>');
+            var $delete = $('<td><div><a href="javascript:delete_user(' + idNode + ')" download=""><i class="fas fa-trash"></i></a></div></td>');
 
             $rowdata.append($name, $username, $modify, $delete);
 
@@ -116,21 +119,21 @@ function modify_user(id){
     //console.log(resultData[index]);
 
     var searchPara = {id:id};
-    $.get('/getAuthOnly', searchPara, function(data, statusText, xhr){
+    /*$.get('/getAuthOnly', searchPara, function(data, statusText, xhr){
         if (xhr.status == 200){
             //console.log(data);
             OpenManageUser(data, id);
         }
-    });
+    });*/
 }
 
 function delete_user(id){
     if (confirm('確定刪除?')) {
         var searchPara = {name:document.getElementById("name").innerHTML, id:id};
-        $.post('/delete_User', searchPara, function(data, statusText, xhr){
+        /*$.post('/delete_User', searchPara, function(data, statusText, xhr){
             if (xhr.status == 200){
                 ShowResultDiv();
             }
-        });
+        });*/
     }
 }

@@ -21,7 +21,7 @@ function ShowResultDiv(){
     startDate = now.add(-1, 'M').format('YYYY-MM-DDT') + "00:00:00";
 
     var searchPara = {name:"", starttime:startDate, endtime:endDate, site:"", category:""};
-    $.get('/getRecords', searchPara, function(data, statusText, xhr){
+    /*$.get('/getRecords', searchPara, function(data, statusText, xhr){
         if (xhr.status == 200){
             if (!data){
                 alert("查無結果!");
@@ -40,13 +40,13 @@ function ShowResultDiv(){
             $("#ResultDiv").show();
             updateRangeTime();
         }
-    });
+    });*/
 }
 
 function UpdateResultDiv(){
     var searchPara = {name:document.getElementById("name").innerHTML, starttime:start, endtime:end, site:site, category:category, color:color, licence:licence, success:"0"};
 
-    $.get('/getRecords', searchPara, function(data, statusText, xhr){
+    /*$.get('/getRecords', searchPara, function(data, statusText, xhr){
         if (xhr.status == 200){
             if (!data){
                 alert("查無結果!");
@@ -65,7 +65,7 @@ function UpdateResultDiv(){
             $("#ResultDiv").show();
             updateRangeTime();
         }
-    });
+    });*/
 }
 
 var CountofPage = 10;
@@ -84,8 +84,10 @@ function updateResult(data, page){
             var $rowdata = $('<tr data-toggle="collapse" data-target=".toogle' + index + '"></tr>');
 
             var $index = $('<td></td>').html(index + 1);
-            var $site = $('<td></td>').html(row.site);
-            var $licence = $('<td></td>').html(row.licence);
+            var siteNode = row.site;
+            var LicenceNode row.licence;
+            var $site = $('<td></td>').html(siteNode);
+            var $licence = $('<td></td>').html(LicenceNode);
             if (row.category == "car"){
                 var $category = $('<td></td>').html('<div class="d-flex align-items-center justify-content-center"><img src="resources/car_circle.png" alt="profile" width="50"><div style="padding-left: 20px;">小型車</div></div>');
             }
@@ -100,17 +102,19 @@ function updateResult(data, page){
                     var $color = $('<td></td>').html(colorArray_hash[i][1]);
                 }
             }
-            var $time = $('<td></td>').html(row.time);
+            var timeNode = row.time;
+            var $time = $('<td></td>').html(timeNode);
 
  			var $action = $('<td></td>');
-            var $download = $('<div><a href="'+ row.path + '/0.jpg" download=""><img src="resources/download.png" alt="profile" width="30"></a></div>');
+            var pathNode = row.path;
+            var $download = $('<div><a href="'+ pathNode+ '/0.jpg" download=""><img src="resources/download.png" alt="profile" width="30"></a></div>');
             $action.append($download);
             //var $delete = $('<td><div><a href="javascript:deleteImage(' + row.id + ')" download=""><img src="resources/delete.png" alt="profile" width="30"></div></td>');
 
             $rowdata.append($site, $licence, $category, $color, $time, $action);
             
             var $coiledimg = $('<tr class="collapse in toogle' + index + '"</tr>');
-            var $imgs = $('<td colspan="7"></td>').html('<div class="d-flex justify-content-around align-items-center"><div class="d-flex align-items-center justify-content-center records-block">即時截圖畫面</div><img src="' + row.path + '/0.jpg" loading="lazy" width = "500px"></div>' );
+            var $imgs = $('<td colspan="7"></td>').html('<div class="d-flex justify-content-around align-items-center"><div class="d-flex align-items-center justify-content-center records-block">即時截圖畫面</div><img src="' + pathNode + '/0.jpg" loading="lazy" width = "500px"></div>' );
 
             $coiledimg.append($imgs);
             $tbody.append($rowdata, $coiledimg);
@@ -120,7 +124,8 @@ function updateResult(data, page){
 
     $("table[name='result']").append(rowElements);
 
-    updatePagination(data.length, page);
+    var lengthNode = data.length;
+    updatePagination(lengthNode, page);
 }
 function updateResultThead(){
     // Create header.

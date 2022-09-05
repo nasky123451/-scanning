@@ -47,7 +47,7 @@ function MenuConnectWS(server, userId) {
 function ShowStatusMenu(type){
 
     var searchPara = {type:""};
-    $.post('/getSites', searchPara, function(data, statusText, xhr){
+    /*$.post('/getSites', searchPara, function(data, statusText, xhr){
         if (xhr.status == 200){
             if (!data){
                 return;
@@ -59,15 +59,15 @@ function ShowStatusMenu(type){
             updateStatusMenu(data, type);
             statusflag = false;
         }
-    });
+    });*/
 }
 
 function UpdateStatusShow(){
-    $.post('/updateSitesShow');
+    //$.post('/updateSitesShow');
 }
 
 function UpdateRecordShow(){
-    $.post('/updateRecordShow');
+    //$.post('/updateRecordShow');
 }
 
 var ErrCount = 0;
@@ -224,7 +224,7 @@ function clearShowBox(e){
 }
 
 function windowLocation(html, site, id){
-    $.get('/status');
+    //$.get('/status');
 }
 
 function hasSpecialStr(str){

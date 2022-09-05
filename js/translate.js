@@ -21,7 +21,7 @@ $(document).ready(function(){
 });
 
 function UpdateDayForecast(){
-    $.getJSON('https://opendata.cwb.gov.tw/api/v1/rest/datastore/F-D0047-079?Authorization=CWB-B7FC0A1D-F623-4001-896F-63FED75F36D0', function(data) {
+    /*$.getJSON('https://opendata.cwb.gov.tw/api/v1/rest/datastore/F-D0047-079?Authorization=CWB-B7FC0A1D-F623-4001-896F-63FED75F36D0', function(data) {
         //console.log(data);
         var trabslatelocation;
         if (document.getElementsByTagName("select")[0].value == "1"){
@@ -62,11 +62,11 @@ function UpdateDayForecast(){
         })
         
 
-    });
+    });*/
 }
 function UpdateWeekForecast(){
     //console.log(document.getElementsByName("translatetable")[0].getElementsByTagName("tbody")[0].getElementsByTagName("tr")[0].getElementsByTagName("td")[0].innerHTML);
-    $.getJSON('https://opendata.cwb.gov.tw/api/v1/rest/datastore/F-D0047-079?Authorization=CWB-B7FC0A1D-F623-4001-896F-63FED75F36D0', function(data) {
+    /*$.getJSON('https://opendata.cwb.gov.tw/api/v1/rest/datastore/F-D0047-079?Authorization=CWB-B7FC0A1D-F623-4001-896F-63FED75F36D0', function(data) {
         //console.log(document.getElementsByTagName("select")[0].value);
         var trabslatelocation;
         if (document.getElementsByTagName("select")[0].value == "1"){
@@ -227,5 +227,5 @@ function UpdateWeekForecast(){
 
         })
 
-    });
+    });*/
 }

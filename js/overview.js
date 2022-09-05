@@ -48,8 +48,10 @@ function updateUserLog(data){
         var $tbody = $('<tbody></tobdy>');
         var $rowdata = $('<tr data-toggle="collapse" data-target=".toogle' + index + '"></tr>');
 
-        var $username = $('<td></td>').html(row.username);
-        var $time = $('<td></td>').html(row.time);
+        var usernameNode = row.username;
+        var timeNode = row.time;
+        var $username = $('<td></td>').html(usernameNode);
+        var $time = $('<td></td>').html(timeNode);
         $rowdata.append($username, $time);
         
         $tbody.append($rowdata);
@@ -61,7 +63,7 @@ function updateUserLog(data){
 
 var resultData;
 function showUserLog(){
-    $.get('/getUserLogs', function(data, statusText, xhr){
+    /*$.get('/getUserLogs', function(data, statusText, xhr){
         if (xhr.status == 200){
             if (!data){
                 //alert("查無結果!");
@@ -75,7 +77,7 @@ function showUserLog(){
             updateUserLog(data);
             
         }
-    }); 
+    }); */
 }
 
 var resultData;
@@ -85,7 +87,7 @@ function ShowViewTable(){
     document.getElementsByClassName("viewBar-text")[0].innerText = moment().format('YYYY/MM/DD');
     
     searchPara = {starttime:StartTime, endtime:EndTime, interval:"days"};
-    $.get('/getCountStatistics', searchPara, function(data, statusText, xhr){
+    /*$.get('/getCountStatistics', searchPara, function(data, statusText, xhr){
         if (xhr.status == 200){
             if (!data){
                 //alert("查無結果!");
@@ -93,7 +95,7 @@ function ShowViewTable(){
             }
             updateViewTable(data);
         }
-    });
+    });*/
 }
 
 function updateViewTable(data){

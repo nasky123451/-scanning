@@ -22,7 +22,7 @@ var mapimg = [["resources/NorthGate.png", "1083", "631"],["resources/sevenshares
 
 function initEmap(type){
     var searchPara = {type:""}
-    $.post('/getSites', searchPara, function(data, statusText, xhr){
+    /*$.post('/getSites', searchPara, function(data, statusText, xhr){
         if (xhr.status == 200){
             if (!data){
                 alert("查無結果!");
@@ -36,7 +36,7 @@ function initEmap(type){
             resultData = data;
             setEmap(type);
         }
-    }); 
+    }); */
 
     
     /*<a href='#' onclick="myfunction()" style="position: absolute; transform: translate(138px, 175px);" id="p1"><img src="resources/CCTV_1.png" alt="profile" class="rounded-circle" width="30"></a>*/
@@ -45,7 +45,7 @@ function initEmap(type){
 function initEmapAndshowStatus(site, id){
     document.getElementsByName("emap-type")[0].value = site;
     var searchPara = {type:""}
-    $.post('/getSites', searchPara, function(data, statusText, xhr){
+    /*$.post('/getSites', searchPara, function(data, statusText, xhr){
         if (xhr.status == 200){
             if (!data){
                 alert("查無結果!");
@@ -60,7 +60,7 @@ function initEmapAndshowStatus(site, id){
             setEmap(site);
             showStatus(id);
         }
-    });
+    });*/
 }
 
 function setEmap(type){
@@ -193,7 +193,7 @@ function showStatus(id){
             var message = "使用者:" + document.getElementById("name").innerHTML + " 搜尋了設備狀態 類別:"+resultData[i]["product"]+ " 名稱:"+resultData[i]["name"]+" 時間:" + moment().format('YYYY-MM-DD HH:mm:ss') + "\n";
             message += "====================================================================\n"
             searchPara = {message:message, path:path};
-            $.post('/write_log', searchPara);
+            //$.post('/write_log', searchPara);
 
             break;
         }
@@ -218,7 +218,7 @@ function updateEmap(){
 
 function StatusConnectWS(server, userId) {
     try {
-        cws = new WebSocket('wss://' + server + '?user_id=' + userId)
+        cws = new WebSocket('ws://' + server + '?user_id=' + userId)
         cws.onopen = function(e) { 
             console.log('connected to ws server ' + server + ' user_id: ' + userId);
         }; 
@@ -259,7 +259,7 @@ function ShowstatusChart(name){
     StartTime = now.add(-1, 'M').format('YYYY-MM-DDT00:00');
     
     searchPara = {starttime:StartTime, endtime:EndTime, interval:document.getElementById("datetime").value};
-    $.get('/getStatusCount', searchPara, function(data, statusText, xhr){
+    /*$.get('/getStatusCount', searchPara, function(data, statusText, xhr){
         if (xhr.status == 200){
             if (!data){
                 alert("查無結果!");
@@ -272,7 +272,7 @@ function ShowstatusChart(name){
             }
             updateStatusChart(name, data);
         }
-    }); 
+    }); */
 }
 
 function updateStatusChart(name, datas){
@@ -307,7 +307,7 @@ function updateStatusChart(name, datas){
 
 function getstatusData(name, type){
     var searchPara = {type:type}
-    $.post('/getSites', searchPara, function(data, statusText, xhr){
+    /*$.post('/getSites', searchPara, function(data, statusText, xhr){
         if (xhr.status == 200){
             if (!data){
                 alert("查無結果!");
@@ -321,7 +321,7 @@ function getstatusData(name, type){
             
             updateStatusData(name, data);
         }
-    }); 
+    }); */
 }
 
 function updateStatusData(name, datas){
@@ -357,7 +357,7 @@ function updateStatusData(name, datas){
 function getData(classname, type){
     var searchPara = {type:type};
     $('#updatetimeText').text("更新時間："+moment().format('YYYY-MM-DD hh:mm:ss'));
-    $.post('/getSites', searchPara, function(data, statusText, xhr){
+    /*$.post('/getSites', searchPara, function(data, statusText, xhr){
         if (xhr.status == 200){
             if (!data){
                 alert("查無結果!");
@@ -370,13 +370,13 @@ function getData(classname, type){
 
             InitStatus(data, classname, type);
         }
-    });
+    });*/
 }
 
 function updateData(classname, type){
     var searchPara = {type:type};
     $('#updatetimeText').text("更新時間："+moment().format('YYYY-MM-DD hh:mm:ss'));
-    $.post('/getSites', searchPara, function(data, statusText, xhr){
+    /*$.post('/getSites', searchPara, function(data, statusText, xhr){
         if (xhr.status == 200){
             if (!data){
                 alert("查無結果!");
@@ -389,7 +389,7 @@ function updateData(classname, type){
 
             updateStatus(data, classname, type);
         }
-    }); 
+    }); */
 }
 
 function InitStatus(data, classname, type){
@@ -409,29 +409,31 @@ function InitStatus(data, classname, type){
     var rowElements = data.map(function (row, index) {
 
         var $rowdata = $('<tr data-toggle="collapse" data-target=".toogle' + index + '"></tr>');
-        if (row.product == "伺服器主機" || row.product == "NVR主機"){
-            var $product = $('<td></td>').html('<div class="d-flex align-items-center"><img src="resources/NVR.png" alt="profile" width="50"><div style="padding-left: 20px;">'+row.product+'</div></div>');
+        var productNode = row.product;
+        if (productNode == "伺服器主機" || productNode == "NVR主機"){
+            var $product = $('<td></td>').html('<div class="d-flex align-items-center"><img src="resources/NVR.png" alt="profile" width="50"><div style="padding-left: 20px;">'+productNode+'</div></div>');
         }else{
-            var $product = $('<td></td>').html('<div class="d-flex align-items-center"><img src="resources/CCTV_2.png" alt="profile" width="50"><div style="padding-left: 20px;">'+row.product+'</div></div>');
+            var $product = $('<td></td>').html('<div class="d-flex align-items-center"><img src="resources/CCTV_2.png" alt="profile" width="50"><div style="padding-left: 20px;">'+productNode+'</div></div>');
         }
-        var $name = $('<td></td>').html(row.name);
+        var nameNode = row.name;
+        var $name = $('<td></td>').html(nameNode);
 
         if (row.status == "1"){
             //SendMessage(row.id); 
-            if (row.product == "伺服器主機" || row.product == "NVR主機"){
+            if (productNode == "伺服器主機" || productNode == "NVR主機"){
                 var $status = $('<td></td>').html("<div class='d-flex align-items-center justify-content-center'><div class='error-circle'></div></div>");   
             }else{
                 var $status = $('<td></td>').html("<div class='d-flex align-items-center justify-content-center'><div class='error-circle'></div><div class='p-3'><a href='javascript:Resetequipment()'><img src='resources/reset.png' alt='profile' width='30'></div></div>");   
             }
         }else{
             if (Math.ceil(row.ping) > 150){
-                if (row.product == "伺服器主機" || row.product == "NVR主機"){
+                if (productNode == "伺服器主機" || productNode == "NVR主機"){
                     var $status = $('<td></td>').html("<div class='d-flex align-items-center justify-content-center'><div class='warning-circle'></div></div>");   
                 }else{
                     var $status = $('<td></td>').html("<div class='d-flex align-items-center justify-content-center'><div class='warning-circle'></div><div class='p-3'><a href='javascript:Resetequipment()'><img src='resources/reset.png' alt='profile' width='30'></div></div>");   
                 }
             }else{
-                if (row.product == "伺服器主機" || row.product == "NVR主機"){
+                if (productNode == "伺服器主機" || productNode == "NVR主機"){
                     var $status = $('<td></td>').html("<div class='d-flex align-items-center justify-content-center'><div class='success-circle'></div></div>");   
                 }else{
                     var $status = $('<td></td>').html("<div class='d-flex align-items-center justify-content-center'><div class='success-circle'></div><div class='p-3'><a href='javascript:Resetequipment()'><img src='resources/reset.png' alt='profile' width='30'></div></div>");   
@@ -439,11 +441,12 @@ function InitStatus(data, classname, type){
             }
             
         }
-        if(row.ping == "None"){
+        var pingNode = row.ping;
+        if(pingNode == "None"){
             var $ping = $('<td></td>').html("None");
         }
         else{
-            var $ping = $('<td></td>').html(row.ping + "ms");
+            var $ping = $('<td></td>').html(pingNode + "ms");
         }
         
 
@@ -479,7 +482,7 @@ function updateStatus(data, classname, type){
 function switch_set(checked, name){
     var searchPara = {"switch":checked,"station_name":name};
 
-    $.post('/setSwitchStatus', searchPara, function(data, statusText, xhr){
+    /*$.post('/setSwitchStatus', searchPara, function(data, statusText, xhr){
       if (xhr.status == 200){
           if (!data){
               alert("查無結果!");
@@ -490,10 +493,10 @@ function switch_set(checked, name){
             window.location.href = "welcome";
             
         }
-    });
+    });*/
 }
 
 function line_inform(){
     var user = {name:document.getElementById("usermenu").getElementsByTagName("h6")[0].innerHTML};
-    $.get('/lineInform', user);
+    //$.get('/lineInform', user);
 }
