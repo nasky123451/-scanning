@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="zh-TW">
+<head>
+	
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<!-- Bootstrap CSS -->
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	
+    <link rel="stylesheet" href="css/sweetalert2.min.css">
+    <script type="text/javascript" src="js/sweetalert2.all.js"></script>
+    <script type="text/javascript" src="js/fontawesome.js" crossorigin="anonymous"></script>
+	
+	<link rel="stylesheet" href="css/common.css">
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/fontawesome-free-5.12.0-web/css/all.min.css">
+	<link rel="stylesheet" href="css/_root.css">
+
+	<script type="text/javascript" src="js/moment.min.js"></script>
+	<script type="text/javascript" src="js/daterangepicker.js"></script>
+	<link rel="stylesheet" href="css/daterangepicker.css">
+
+	<script type="text/javascript" src="js/Chart.min.js"></script>
+	<title>雲嘉南濱海國家風景區管理處</title>
+
+</head>
+<body>
+	<div style="display: none" id="get_value">{{.permission}}</div><!--世紀大爛招-->
+	<div class="pageWrapper d-md-block d-lg-flex">
+		<div class="contentArea fixedTopbar">
+			
+			<nav class="topbar navbar navbar-expand-lg navbar-dark bg-dark">
+				<div class="d-flex container-fluid justify-content-between">
+					<button type="button" aria-haspopup="true" aria-expanded="false" class="btn" onclick="window.location.href='overview'"><img src="resources/SCNS.png" alt="profile" width="230"></button>
+					<span id="menuname"></span>	
+					<div class="d-flex align-items-center justify-content-center">
+				  		<div class="mx-1 dropdown">
+							<button type="button" aria-haspopup="true" aria-expanded="false" class="btn btn-dark" onclick="window.location.href='logout'"><img src="resources/logout.png" alt="profile" width="30"></button>
+				  		</div>
+				  		<div class="mx-1 dropdown">
+							<button type="button" aria-haspopup="true" aria-expanded="false" class="btn btn-dark" onclick="showmenu(this)"><img src="resources/dashboard (2).png" alt="profile" width="30"></button>
+							<div tabindex="-1" role="menu" aria-hidden="false" class="ddWidth dropdown-menu table-body" data-popper-placement="bottom-end" style="position: absolute; inset: 0px 0px auto auto; transform: translate(-15px,52px);">
+								<div class="d-flex gap-3 pt-2 align-items-center">
+									<table name="menu" id="menu" class="table">
+										<tbody>
+										</tbody>
+									</table>
+								</div>
+							</div>
+				  		</div>
+				  		<div class="mx-1 dropdown">
+							<button type="button" aria-haspopup="true" aria-expanded="false" class="btn btn-dark" onclick="showmenu(this)"><img src="resources/notifications.png" alt="profile" width="30"></button>
+							<div tabindex="-1" role="menu" aria-hidden="false" class="ddWidth dropdown-menu table-body" data-popper-placement="bottom-end" style="position: absolute; inset: 0px 0px auto auto; transform: translate(-15px,52px);">
+								<div class="d-flex gap-3 pt-2 align-items-center">
+									<table name="resultstatusmenu" id="resultstatusmenu" class="table">
+										<tbody>
+										</tbody>
+									</table>
+								</div>
+							</div>
+				  		</div>
+				  		<div class="mx-1 dropdown">
+							<button type="button" aria-haspopup="true" aria-expanded="false" class="btn btn-dark" onclick="showmenu(this)"><img src="resources/profile.png" alt="profile" class="rounded-circle" width="30"></button>
+							<div name="usermenu" id="usermenu" tabindex="-1" role="menu" aria-hidden="false" class="ddWidth dropdown-menu" data-popper-placement="bottom-end" style="position: absolute; inset: 0px 0px auto auto; transform: translate(-15px, 52px);">
+								<div class="d-flex gap-3 p-3 border-bottom pt-2 align-items-center">
+									<img src="resources/profile.png" alt="profile" class="rounded-circle" width="30">
+									<h6 class="mb-0" id="name">{{.name}}</h6>
+									<span style="display: none;" id="username">{{.username}}</span>
+								</div>
+							</div>
+				  		</div>
+					</div>
+				</div>
+			</nav>
+			<!--Table-->
+			<div class="d-flex">
+				<div class="pt-4">
+					<nav class="navbar navbar-expand-lg bd-sidebar navbar-dark bg-dark sidebar-body">	
+						<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation" style="display: inline;">
+						<div class="navbar-toggler-icon"></div>
+						</button>	
+						<div class="collapse" id="navbarNavAltMarkup">
+							<div style=" padding-top: 20px;">
+								<span >黑名單列表</span>
+							</div>
+							<div class="d-flex justify-content-between align-items-center p-3">
+								<div class="pr-3 search-input">
+									<input name="passlicence" type="text" placeholder="車牌號碼">
+	        						<button type="button" aria-haspopup="true" aria-expanded="false" class="btn btn-dark" onclick="search_licence()">搜尋</button>
+								</div>
+								<div class="pl-3">
+									<button type="button" aria-haspopup="true" aria-expanded="false" class="btn" onclick="OpenAddUser()"><img src="resources/add.png" alt="profile" width="20"></button>
+								</div>
+									
+							</div>
+							<div class="navbar-nav mx-1 dropdown pt-3 nvbar-text" id="sidebar">
+							</div>		
+						</div>
+					</nav>
+				</div>
+				
+				<div id="ResultDiv" class="pt-4 boxContainer container-fluid text-center" style="width: 90%;">
+					<div class="pageWrapper d-md-block d-lg-flex card pb-4">
+						<div class="d-flex justify-content-end align-items-center table-border-bottom">
+							<label id="totalText" class="font-weight-bold text-muted" style="padding-right: 15px;">共?筆</label>
+							<nav aria-label="Page navigation">
+								<ul class="pagination pagination-sm">
+									<li name="previous" class="page-item">
+										<a class="page-link" href="javascript:onPreviousBtn()" aria-label="Previous">
+											<span aria-hidden="true">&lt;</span>
+										</a>
+									</li>
+									<li class="page-item" style="background-color: #001e3c;">
+										<select class="page-link" name="page">
+											<option value="1">1</option>
+											<option value="2">2</option>
+											<option value="3">3</option>
+										</select>
+									</li>
+									<li name="next" class="page-item">
+										<a class="page-link" href="javascript:onNextBtn()" aria-label="Next">
+											<span aria-hidden="true">&gt;</span>
+										</a>
+									</li>
+								</ul>
+							</nav>
+						</div>
+						<div class="d-flex align-items-end bd-highlight sidebar-body" style="display: block; overflow-x: auto; white-space: nowrap;">
+							<table name="result" class="table">
+								<thead>
+									<tr>
+									</tr>
+								</thead>
+								<tbody >
+								</tbody>
+							</table>
+						</div>
+						<div class="d-flex justify-content-end align-items-center table-border-bottom">
+							<label id="totalText2" class="font-weight-bold text-muted" style="padding-right: 15px;">共?筆</label>
+							<nav aria-label="Page navigation">
+								<ul class="pagination pagination-sm">
+									<li name="previous" class="page-item">
+										<a class="page-link" href="javascript:onPreviousBtn()" aria-label="Previous">
+											<span aria-hidden="true">&lt;</span>
+										</a>
+									</li>
+									<li class="page-item" style="background-color: #001e3c;">
+										<select class="page-link" name="page">
+											<option value="1">1</option>
+											<option value="2">2</option>
+											<option value="3">3</option>
+										</select>
+									</li>
+									<li name="next" class="page-item">
+										<a class="page-link" href="javascript:onNextBtn()" aria-label="Next">
+											<span aria-hidden="true">&gt;</span>
+										</a>
+									</li>
+								</ul>
+							</nav>
+						</div>
+					</div>
+				</div>
+				<div class="pt-4">
+					<nav class="navbar navbar-expand-lg bd-sidebar navbar-dark bg-dark sidebar-body">	
+						<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup2" aria-controls="navbarNavAltMarkup2" aria-expanded="false" aria-label="Toggle navigation" style="display: inline;">
+						<div class="navbar-toggler-icon"></div>
+						</button>	
+						<div class="collapse" id="navbarNavAltMarkup2">
+							<div style=" padding-top: 20px;">
+								<span><nobr>容留列表</nobr></span>
+							</div>
+    						<button type="button" aria-haspopup="true" aria-expanded="false" style="float:right;" class="btn btn-dark" onclick="update_retention()">更新</button>
+							<div class="navbar-nav mx-1 dropdown pt-3 nvbar-text" style="flex-direction: column;" id="retention_bar">
+							</div>		
+						</div>
+					</nav>
+				</div>
+			</div>
+		</div>
+					
+	</div>
+</body>
+<script type="text/javascript" src="js/moment.min.js"></script>
+<script type="text/javascript" src="js/records_admin.js"></script>
+<script type="text/javascript" src="js/count_statistics.js"></script>
+<script type="text/javascript" src="js/popup.js"></script>
+<script type="text/javascript" src="js/menu.js"></script>
+<script type="text/javascript" src="js/pass.js"></script>
+</html>
+
+<script>
+    ShowResultDiv();
+</script>
+<style type="text/css">
+
+</style>
+

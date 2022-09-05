@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <script>
+     if ( self === top ) {
+     document.documentElement.style.display = 'block';
+     }
+     else {
+     top.location = self.location;
+     }
+     </script>
+    
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="css/sweetalert2.min.css">
+    <script type="text/javascript" src="js/sweetalert2.all.js"></script>
+    <script type="text/javascript" src="js/fontawesome.js" crossorigin="anonymous"></script>
+    
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/fontawesome-free-5.12.0-web/css/all.min.css">
+    <link rel="stylesheet" href="css/_root.css">    
+    <title>雲嘉南濱海國家風景區管理處</title>
+</head>
+
+<!-- d-bg-body -->
+<body>
+    <div class="container">
+        <div class="card shadow">
+            <div class="card-header no-gutters d-bg-primary-gradient-top d-flex justify-content-between">
+                <div class="col-4 d-none d-md-flex align-items-center">
+                    <img src="resources/SCNS.png" alt="ty traffic logo" class="img-fluid" width="360" height="100"/>
+                </div>
+                <div class="col-8 col-sm-9 col-md-8 d-flex align-items-center justify-content-end">
+                    <img src="resources/Robot.png" alt="profile" width="80">
+                    <h1 class="h5 card-title mb-0 py-2 pl-3 pl-md-0 text-right">
+                        <span class="d-block d-sm-inline"><b class="title-text">AI人車流管理資訊平台</b></span><span class="d-block d-sm-inline text-right"></span>
+                    </h1>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="form-group">
+                    <label>使用者名稱</label>
+                    <div class="input-group mb-2">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <i class="fa fa-user w-100"></i>
+                            </div>
+                        </div>
+                        <input type="text" class="form-control" placeholder="使用者名稱" name="username">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>密碼</label>
+                    <div class="input-group mb-2">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <i class="fa fa-key w-100"></i>
+                            </div>
+                        </div>
+                        <input type="password" class="form-control" placeholder="密碼" name="PD">
+                    </div>
+                </div>
+                <form action="/welcome" method="POST" name="welcome" id="welcome">
+                    <input type="text" class="form-control" name="hash_username" style="display: none;">
+                    <input type="password" class="form-control" name="hash_PD" style="display: none;">
+                    <div class = "form-group text-center">
+                        <p style="color:red">{{.message}}</p>
+                        <button type="button" class="btn btn-danger col-3" style="border: 2px solid #28415b;" onclick="return userlogin();">登入</button>
+                    </div>
+                    <!--<div class = "form-group text-center">
+                        <a id="button1" href="javascript:modifyuser()" class="container"><u>修改使用者設定</u></a>
+                    </div>-->
+                </form> 
+                <div class = "form-group text-center">
+                    <a href="#" onclick="OpenForgot(2)">忘記密碼</a>
+                </div>
+                <span style="display: none;" id="input_value">{{.counter}}</span>
+
+            </div>
+            <div class="card-footer text-center">
+                &copy; copyright 2022 Chrees Technology Co.,Ltd. All rights reserved.
+            </div>
+        </div>  
+    </div>
+</body>
+<script type="text/javascript" src="js/moment.min.js"></script>
+<script type="text/javascript" src="js/login.js"></script>
+<script type="text/javascript" src="js/popup.js"></script>
+<script type="text/javascript">
+    
+</script>
+</html>

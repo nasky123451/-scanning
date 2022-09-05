@@ -1,0 +1,315 @@
+<!doctype html>
+<html lang="zh-TW">
+<head>
+	
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<!-- Bootstrap CSS -->
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	
+    <link rel="stylesheet" href="css/sweetalert2.min.css">
+    <script type="text/javascript" src="js/sweetalert2.all.js"></script>
+	
+	<link rel="stylesheet" href="css/common.css">
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/fontawesome-free-5.12.0-web/css/all.min.css">
+	<link rel="stylesheet" href="css/_root.css">
+
+	<script type="text/javascript" src="js/Chart.min.js"></script>
+	<title>雲嘉南濱海國家風景區管理處</title>
+
+</head>
+<body>
+	<div style="display: none" id="get_value">{{.permission}}</div><!--世紀大爛招-->
+	<div class="pageWrapper d-md-block d-lg-flex">
+		<span class="fixedF5Icon">F5更新數據</span>
+		<div class="contentArea fixedTopbar">
+			<nav class="topbar navbar navbar-expand-lg navbar-dark bg-dark">
+				<div class="d-flex container-fluid justify-content-between">
+					<button type="button" aria-haspopup="true" aria-expanded="false" class="btn" onclick="window.location.href='overview'"><img src="resources/SCNS.png" alt="profile" width="230"></button>
+					<span class="menu-text" id="menuname"></span>		
+					<div class="d-flex align-items-center justify-content-center">
+				  		<div class="mx-1 dropdown">
+							<button type="button" aria-haspopup="true" aria-expanded="false" class="btn btn-dark" onclick="window.location.href='logout'"><img src="resources/logout.png" alt="profile" width="30"></button>
+				  		</div>
+				  		<div class="mx-1 dropdown">
+							<button type="button" aria-haspopup="true" aria-expanded="false" class="btn btn-dark" onclick="showmenu(this)"><img src="resources/dashboard (2).png" alt="profile" width="30"></button>
+							<div tabindex="-1" role="menu" aria-hidden="false" class="ddWidth dropdown-menu table-body" data-popper-placement="bottom-end" style="position: absolute; inset: 0px 0px auto auto; transform: translate(-15px,52px);">
+								<div class="d-flex gap-3 pt-2 align-items-center">
+									<table name="menu" id="menu" class="table">
+										<tbody>
+										</tbody>
+									</table>
+								</div>
+							</div>
+				  		</div>
+				  		<div class="mx-1 dropdown">
+							<button type="button" aria-haspopup="true" aria-expanded="false" class="btn btn-dark" onclick="showmenu(this)"><img src="resources/notifications.png" alt="profile" width="30"></button>
+							<div tabindex="-1" role="menu" aria-hidden="false" class="ddWidth dropdown-menu table-body" data-popper-placement="bottom-end" style="position: absolute; inset: 0px 0px auto auto; transform: translate(-15px,52px);">
+								<div class="d-flex gap-3 pt-2 align-items-center">
+									<table name="resultstatusmenu" id="resultstatusmenu" class="table">
+										<tbody>
+										</tbody>
+									</table>
+								</div>
+							</div>
+				  		</div>
+				  		<div class="mx-1 dropdown">
+							<button type="button" aria-haspopup="true" aria-expanded="false" class="btn btn-dark" onclick="showmenu(this)"><img src="resources/profile.png" alt="profile" class="rounded-circle" width="30"></button>
+							<div name="usermenu" id="usermenu" tabindex="-1" role="menu" aria-hidden="false" class="ddWidth dropdown-menu" data-popper-placement="bottom-end" style="position: absolute; inset: 0px 0px auto auto; transform: translate(-15px, 52px);">
+								<div class="d-flex gap-3 p-3 border-bottom pt-2 align-items-center">
+									<img src="resources/profile.png" alt="profile" class="rounded-circle" width="30">
+									<h6 class="mb-0" id="name">{{.name}}</h6>
+									<span style="display: none;" id="username">{{.username}}</span>
+								</div>
+							</div>
+				  		</div>
+					</div>
+				</div>
+			</nav>
+			<div class="p-4 boxContainer container-fluid">
+				<div class="card border-bottom">
+					<div class="row justify-content-around">
+						<div class="col-md-12 col-lg-3 col-xl-3">
+							<div class="p-4 card-body">
+								<h2 class="p-1 border-bottom">Overview</h2>
+								<label>上個月人車流統計次數</label>
+								<div class="text-muted card-subtitle">
+									<label><font size="4" id="chart_date">????/??/??~????/??/??</font></label>
+								</div>
+								<div class="d-flex">
+									<div class="col">
+										<div class="text-muted card-subtitle">
+											<label><font size="4" id="chart_date">人流:</font></label>
+										</div>
+										<div class="bg-current-color text-dark-white">
+											<div class="card-body text-center">
+												<font size="5" id="people_totle_count">???次</font>
+											</div>
+										</div>
+									</div>
+									<div class="col">
+										<div class="text-muted card-subtitle">
+											<label><font size="4" id="chart_date">車流:</font></label>
+										</div>
+										<div class="bg-current-color text-dark-white">
+											<div class="card-body text-center">
+												<font size="5" id="car_totle_count">???次</font>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-12 col-lg-8 col-xl-8">
+							<div class="p-4 card-body" id="canvas">
+								<canvas id="myChart" class="MaxHeight250"></canvas>
+								<select class="form-control styled-select " id="datetime" name="datetime" style="position: absolute; top: 0; right: 0; width: 100px;">
+									<option value="months">Months</option>
+									<option value="weeks">Weeks</option>
+									<option selected="selected" value="days">Days</option>			
+								</select>									
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="card">
+					<div class="row">
+						<div class="col-lg-3">
+							<div class="d-flex align-items-center">
+								<div class="p-4">
+									<img src="resources/car_circle.png" alt="profile" width="80">
+								</div>
+								<div class="col card-subtitle text-center">
+									<font class="text-muted" size="4">小型車輛偵測次數</font><br>
+									<font size="4" id="car_count">??次</font>
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-3">
+							<div class="d-flex align-items-center">
+								<div class="p-4">
+									<img src="resources/truck_icon.png" alt="profile" width="80">
+								</div>
+								<div class="card-subtitle text-center">
+									<font class="text-muted" size="4">大型車輛偵測次數</font><br>
+									<font size="4" id="truck_count">??次</font>
+								</div>	
+							</div>			
+						</div>
+						<div class="col-lg-3">
+							<div class="d-flex align-items-center">
+								<div class="p-4">
+									<img src="resources/treadmill.png" alt="profile" width="80">
+								</div>
+								<div class="card-subtitle text-center">
+									<font class="text-muted" size="4">機車偵測次數</font><br>
+									<font size="4" id="motorbike_count">??次</font>
+								</div>	
+							</div>
+						</div>
+						<div class="col-lg-3">
+							<div class="d-flex align-items-center">
+								<div class="p-4">
+									<img src="resources/people_icon.png" alt="profile" width="80">
+								</div>
+								<div class="card-subtitle text-center">
+									<font class="text-muted" size="4">行人偵測次數</font><br>
+									<font size="4" id="person_count">??次</font>
+								</div>	
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--Table-->
+			<form id="form" method="">
+				<div class="p-4 boxContainer container-fluid text-center">
+					<div id="ResultDiv" class="pageWrapper d-md-block d-lg-flex">
+						<div class="counter-body">
+							<div class="row justify-content-center">
+								<div class="form-group col-12 col-sm-2 justify-content-center pl-5">
+									<div class="pt-3 pb-3">
+										<font class="pr-1">地點：</font>
+										<img src="resources/location.png" alt="profile" width="25">
+									</div>
+									<select class="form-control mr-sm-2" name="site">
+										<option value="">全選</option>
+										<option value="1">北門遊客中心-人流</option>
+										<option value="2">北門遊客中心洗滌鹽-人流</option>
+										<option value="3">北門遊客中心-車流</option>
+										<option value="4">井仔腳-人流</option>
+										<option value="5">井仔腳-車流</option>	
+										<option value="6">七股遊客中心-人流</option>
+										<option value="7">七股遊客中心-車流</option>
+									</select>
+								</div>
+								<div class="form-group col-12 col-sm-2 pl-5">
+									<div class="pt-3 pb-3">
+										<font>開始時間：</font>
+										<img src="resources/calendar (1).png" alt="profile" width="25">
+									</div>
+									<input type="datetime-local" class="form-control" name="starttime" id="starttime">
+								</div>
+								<div class="form-group col-12 col-sm-2 pl-5">
+									<div class="pt-3 pb-3">
+										<font>結束時間：</font>
+										<img src="resources/calendar (1).png" alt="profile" width="25">
+									</div>
+									<input type="datetime-local" class="form-control" name="endtime" id="endtime">
+								</div>
+								<div class="form-group col-12 col-sm-2 pl-5">
+									<div class="pt-3 pb-3">
+										<font>統計間隔：</font>
+									</div>
+									<!--<div class="form-check form-check-inline">
+										<input class="form-check-input" type="radio" name="interval" id="interval" value="minute" checked>
+										<label class="form-check-label">分</label>
+									</div>
+									<div class="form-check form-check-inline">
+										<input class="form-check-input" type="radio" name="interval" id="interval" value="hours">
+										<label class="form-check-label">時</label>
+									</div>-->
+									<div class="form-check form-check-inline">
+										<input class="form-check-input" type="radio" name="interval" id="interval" value="days" checked>
+										<label class="form-check-label">日</label>
+									</div>
+									<div class="form-check form-check-inline">
+										<input class="form-check-input" type="radio" name="interval" id="interval" value="weeks">
+										<label class="form-check-label">週</label>
+									</div>
+									<div class="form-check form-check-inline">
+										<input class="form-check-input" type="radio" name="interval" id="interval" value="months">
+										<label class="form-check-label">月</label>
+									</div>
+									<div class="form-check form-check-inline">
+										<input class="form-check-input" type="radio" name="interval" id="interval" value="years">
+										<label class="form-check-label">年</label>
+									</div>
+								</div>
+								<div class="form-group col-12 col-sm-2 pl-5">
+									<div class="pt-3 pb-3 text-center">
+										<button type="button" aria-haspopup="true" aria-expanded="false" class="d-flex btn btn-dark" onclick="javascript:exportTextFile()">
+											<font>車牌紀錄匯出</font>
+											<img src="resources/download.png" alt="profile" width="25">
+										</button>
+									</div>
+								</div>
+								<div class="form-group col-12 col-sm-2 pl-5">
+									<div class="pt-3 pb-3 text-center">
+										<button type="button" aria-haspopup="true" aria-expanded="false" class="d-flex btn btn-dark" onclick="javascript:exportCSV()">
+											<font>資料匯出</font>
+											<img src="resources/download.png" alt="profile" width="25">
+										</button>
+									</div>
+								</div>
+							</div>
+							<div class="row justify-content-center">
+								<div class="row align-items-center justify-content-center" id="canvas2">
+									<div class="p-4 text-center col-12 col-sm">
+										<img class="p-2" src="resources/truck_icon.png" alt="profile" width="60">
+										<font class="p-2" size="3" id="select_truck_count">??次</font>
+									</div>
+									<canvas id="myChart2"></canvas>
+								</div>
+							</div>
+							<div class="row justify-content-center">
+								<div class="row align-items-center justify-content-center" id="canvas1">
+									<div class="p-4 text-center col-12 col-sm">
+										<img class="p-2" src="resources/car_circle.png" alt="profile" width="60">
+										<font class="p-2" size="3" id="select_car_count">??次</font>
+									</div>
+									<canvas id="myChart1"></canvas>
+								</div>
+							</div>
+							<div class="row justify-content-center">
+								<div class="row align-items-center justify-content-center" id="canvas3">
+									<div class="p-4 text-center col-12 col-sm">
+										<img class="p-2" src="resources/treadmill.png" alt="profile" width="60">
+										<font class="p-2" size="3" id="select_motorbike_count">??次</font>
+									</div>
+									<canvas id="myChart3"></canvas>
+								</div>
+							</div>
+							<div class="row justify-content-center">
+								<div class="row align-items-center justify-content-center" id="canvas4">
+									<div class="p-4 text-center col-12 col-sm">
+										<img class="p-2" src="resources/people_icon.png" alt="profile" width="60">
+										<font class="p-2" size="3" id="select_person_count">??次</font>
+									</div>
+									<canvas id="myChart4"></canvas>
+								</div>
+							</div>							
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</body>
+<script type="text/javascript" src="js/moment.min.js"></script>
+<script type="text/javascript" src="js/count_statistics.js"></script>
+<script type="text/javascript" src="js/popup.js"></script>
+<script type="text/javascript" src="js/menu.js"></script>
+<script type="text/javascript">
+  $("select[name='site']").on('change', function(){
+    UpdateSelectChart(document.getElementsByName('site')[0].options[document.getElementsByName('site')[0].selectedIndex].value);
+  });
+  $("input[name='interval']").on('change', function(){
+    ShowSelectChart();
+  });
+  document.getElementById("starttime").addEventListener("input", function() {
+    ShowSelectChart();
+  });
+  document.getElementById("endtime").addEventListener("input", function() {
+    ShowSelectChart();
+  });	
+  now = moment();
+  $("input[name='endtime']").val(now.format('YYYY-MM-DDTHH:mm'));
+  $("input[name='starttime']").val(now.add(-1, 'M').format('YYYY-MM-DDT') + "00:00");
+  ShowChart("myChart");
+  ShowSelectChart();
+</script>
+</html>

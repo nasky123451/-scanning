@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="zh-TW">
+<head>
+	<!-- 天氣授權碼 -->
+	<!-- CWB-B7FC0A1D-F623-4001-896F-63FED75F36D0 -->
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<!-- Bootstrap CSS -->
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	
+    <link rel="stylesheet" href="css/sweetalert2.min.css">
+    <script type="text/javascript" src="js/sweetalert2.all.js"></script>
+    <script type="text/javascript" src="js/fontawesome.js" crossorigin="anonymous"></script>
+	
+	<link rel="stylesheet" href="css/common.css">
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/fontawesome-free-5.12.0-web/css/all.min.css">
+	<link rel="stylesheet" href="css/_root.css">
+
+	<script type="text/javascript" src="js/moment.min.js"></script>
+	<script type="text/javascript" src="js/daterangepicker.js"></script>
+	<link rel="stylesheet" href="css/daterangepicker.css">
+
+	<script type="text/javascript" src="js/Chart.min.js"></script>
+	
+	<title>雲嘉南濱海國家風景區管理處</title>
+
+</head>
+<body>
+	<div style="display: none" id="get_value">{{.permission}}</div><!--世紀大爛招-->
+	<div class="pageWrapper d-md-block d-lg-flex">
+		<span class="fixedF5Icon"></span>
+		<div class="contentArea fixedTopbar">
+			<nav class="topbar navbar navbar-expand-lg navbar-dark bg-dark">
+				<div class="d-flex container-fluid justify-content-between">
+					<button type="button" aria-haspopup="true" aria-expanded="false" class="btn" onclick="window.location.href='overview'"><img src="resources/SCNS.png" alt="profile" width="230"></button>
+					<span class="menu-text" id="menuname"></span>					
+					<div class="d-flex align-items-center justify-content-center">
+				  		<div class="mx-1 dropdown">
+							<button type="button" aria-haspopup="true" aria-expanded="false" class="btn btn-dark" onclick="window.location.href='logout'"><img src="resources/logout.png" alt="profile" width="30"></button>
+				  		</div>
+				  		<div class="mx-1 dropdown">
+							<button type="button" aria-haspopup="true" aria-expanded="false" class="btn btn-dark" onclick="showmenu(this)"><img src="resources/dashboard (2).png" alt="profile" width="30"></button>
+							<div tabindex="-1" role="menu" aria-hidden="false" class="ddWidth dropdown-menu table-body" data-popper-placement="bottom-end" style="position: absolute; inset: 0px 0px auto auto; transform: translate(-15px,52px);">
+								<div class="d-flex gap-3 pt-2 align-items-center">
+									<table name="menu" id="menu" class="table">
+										<tbody>
+										</tbody>
+									</table>
+								</div>
+							</div>
+				  		</div>
+				  		<div class="mx-1 dropdown">
+							<button type="button" aria-haspopup="true" aria-expanded="false" class="btn btn-dark" onclick="showmenu(this)"><img src="resources/notifications.png" alt="profile" width="30"></button>
+							<div tabindex="-1" role="menu" aria-hidden="false" class="ddWidth dropdown-menu table-body" data-popper-placement="bottom-end" style="position: absolute; inset: 0px 0px auto auto; transform: translate(-15px,52px);">
+								<div class="d-flex gap-3 pt-2 align-items-center">
+									<table name="resultstatusmenu" id="resultstatusmenu" class="table">
+										<tbody>
+										</tbody>
+									</table>
+								</div>
+							</div>
+				  		</div>
+				  		<div class="mx-1 dropdown">
+							<button type="button" aria-haspopup="true" aria-expanded="false" class="btn btn-dark" onclick="showmenu(this)"><img src="resources/profile.png" alt="profile" class="rounded-circle" width="30"></button>
+							<div name="usermenu" id="usermenu" tabindex="-1" role="menu" aria-hidden="false" class="ddWidth dropdown-menu" data-popper-placement="bottom-end" style="position: absolute; inset: 0px 0px auto auto; transform: translate(-15px, 52px);">
+								<div class="d-flex gap-3 p-3 border-bottom pt-2 align-items-center">
+									<img src="resources/profile.png" alt="profile" class="rounded-circle" width="30">
+									<h6 class="mb-0" id="name">{{.name}}</h6>
+									<span style="display: none;" id="username">{{.username}}</span>
+								</div>
+							</div>
+				  		</div>
+					</div>
+				</div>
+			</nav>
+		</div>
+	    <!--<div class="mypanel"></div>-->
+	    <div class="m-3 p-3 mt-5 float-right">
+	    	<select class="form-control" style="width: 100px;" name="site">
+				<option selected value="1">北門區</option>
+				<option value="2">七股區</option>					
+			</select>
+	    </div>
+		<h1 class="container p-3 mt-5 head-title-text" style="text-align: center;">臺南市天氣預報</h1>
+		<div class="d-flex p-1 container justify-content-center" name="translatelist">
+            <ul class="to-to">
+                <li>
+                	<span></span>
+                	<span></span>
+                	<span></span>
+                	<span></span>
+                	<span></span>
+                	<span></span>
+                </li>
+                <li>
+                	<span></span>
+                	<span></span>
+                	<span></span>
+                	<span></span>
+                	<span></span>
+                	<span></span>
+                </li>
+                <li>
+                	<span></span>
+                	<span></span>
+                	<span></span>
+                	<span></span>
+                	<span></span>
+                	<span></span>
+                </li>
+            </ul>
+		</div>	
+		<div class="container p-5">
+			<div class="row">
+				<table class="col" name="translatetable">
+				  <thead class="bg-primary">
+				    <tr>
+				      <th class="week-row" scope="col" style="border-radius: 20px 0 0 0;">臺南市</th>
+				      <th scope="col"></th>
+				      <th scope="col"></th>
+				      <th scope="col"></th>
+				      <th scope="col"></th>
+	  			      <th scope="col"></th>
+				      <th scope="col" style="border-radius: 0 20px 0 0;"></th>
+				    </tr>
+				  </thead>
+				  <tbody>
+				    <tr>
+				      <th class="week-row" scope="row">白天</th>
+				      <td></td>
+				      <td></td>
+				      <td></td>
+				      <td></td>
+				      <td></td>
+				      <td></td>		      
+				    </tr>
+				    <tr>
+				      <th class="week-row" scope="row">晚上</th>
+				      <td></td>
+				      <td></td>
+				      <td></td>
+				      <td></td>
+				      <td></td>
+				      <td></td>	
+				    </tr>
+				    <tr>
+				      <th class="week-row" scope="row">體感溫度</th>
+				      <td></td>
+				      <td></td>
+				      <td></td>
+				      <td></td>
+				      <td></td>
+				      <td></td>	
+				    </tr>
+				    <tr>
+				      <th class="week-row" scope="row">風向</th>
+				      <td></td>
+				      <td></td>
+				      <td></td>
+				      <td></td>
+				      <td></td>
+				      <td></td>	
+				    </tr>
+				    <tr>
+				      <th class="week-row" scope="row">風速</th>
+				      <td></td>
+				      <td></td>
+				      <td></td>
+				      <td></td>
+				      <td></td>
+				      <td></td>	
+				    </tr>
+				    <tr>
+				      <th class="week-row" scope="row" style="border-radius: 0 0 0 20px;">紫外線</th>
+				      <td></td>
+				      <td></td>
+				      <td></td>
+				      <td></td>
+				      <td></td>
+				      <td style="border-radius: 0 0 20px 0;"></td>
+				    </tr>
+				  </tbody>
+				</table>
+				<div class="col-md-3 ml-3">
+				  <h4 class="note-lg">紫外線指數分級說明</h4>
+				  <ol class="uvi-description">
+                  <li>
+                    <i class="fas fa-sun" style="color: #a7cd20;"></i>
+                    <p>0-2</p>
+                    <p>低量級</p>
+                  </li>
+                  <li>
+                    <i class="fas fa-sun" style="color: orange"></i>
+                    <p>3-5</p>
+                    <p>中量級</p>
+                  </li>
+                  <li>
+                    <i class="fas fa-sun" style="color: #f39800;"></i>
+                    <p>6-7</p>
+                    <p>高量級</p>
+                  </li>
+                  <li>
+                    <i class="fas fa-sun" style="color: #ea1904;"></i>
+                    <p>8-10</p>
+                    <p>過量級</p>
+                  </li>
+                  <li>
+                    <i class="fas fa-sun" style="color: #b34fa2;"></i>
+                    <p>11+</p>
+                    <p>危險級</p>
+                  </li>
+                </ol>
+				</div>
+			</div>
+
+		</div>
+		</div>
+	</div>
+
+</body>
+<script type="text/javascript" src="js/moment.min.js"></script>
+<script type="text/javascript" src="js/translate.js"></script>
+<script type="text/javascript" src="js/popup.js"></script>
+<script type="text/javascript" src="js/menu.js"></script>
+<script type="text/javascript">
+</script>
+
+<style type="text/css">
+
+</style>
+</html>

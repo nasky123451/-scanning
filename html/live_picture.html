@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="zh-TW">
+<head>
+	
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<!-- Bootstrap CSS -->
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	
+    <link rel="stylesheet" href="css/sweetalert2.min.css">
+    <script type="text/javascript" src="js/sweetalert2.all.js"></script>
+    <script type="text/javascript" src="js/fontawesome.js" crossorigin="anonymous"></script>
+	
+	<link rel="stylesheet" href="css/common.css">
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/fontawesome-free-5.12.0-web/css/all.min.css">
+	<link rel="stylesheet" href="css/_root.css">
+
+	<script type="text/javascript" src="js/Chart.min.js"></script>
+	<title>雲嘉南濱海國家風景區管理處</title>
+
+</head>
+<body style="overflow-y:hidden;overflow-x:hidden;">
+	<div style="display: none" id="get_value">{{.permission}}</div><!--世紀大爛招-->
+	<div class="pageWrapper d-md-block d-lg-flex">
+		<div class="contentArea fixedTopbar">
+			<nav class="topbar navbar navbar-expand-lg navbar-dark bg-dark">
+				<div class="d-flex container-fluid justify-content-between">
+					<button type="button" aria-haspopup="true" aria-expanded="false" class="btn" onclick="window.location.href='overview'"><img class="menu-img" src="resources/SCNS.png" alt="profile"></button>
+					<span class="menu-text" id="menuname"></span>					
+					<div class="d-flex align-items-center justify-content-center">
+				  		<div class="mx-1 dropdown">
+							<button type="button" aria-haspopup="true" aria-expanded="false" class="btn btn-dark" onclick="window.location.href='logout'"><img src="resources/logout.png" alt="profile" width="30"></button>
+				  		</div>
+				  		<div class="mx-1 dropdown">
+							<button type="button" aria-haspopup="true" aria-expanded="false" class="btn btn-dark" onclick="showmenu(this)"><img src="resources/dashboard (2).png" alt="profile" width="30"></button>
+							<div tabindex="-1" role="menu" aria-hidden="false" class="ddWidth dropdown-menu table-body" data-popper-placement="bottom-end" style="position: absolute; inset: 0px 0px auto auto; transform: translate(-15px,52px);">
+								<div class="d-flex gap-3 pt-2 align-items-center">
+									<table name="menu" id="menu" class="table">
+										<tbody>
+										</tbody>
+									</table>
+								</div>
+							</div>
+				  		</div>
+				  		<div class="mx-1 dropdown">
+							<button type="button" aria-haspopup="true" aria-expanded="false" class="btn btn-dark" onclick="showmenu(this)"><img src="resources/notifications.png" alt="profile" width="30"></button>
+							<div tabindex="-1" role="menu" aria-hidden="false" class="ddWidth dropdown-menu table-body" data-popper-placement="bottom-end" style="position: absolute; inset: 0px 0px auto auto; transform: translate(-15px,52px);">
+								<div class="d-flex gap-3 pt-2 align-items-center">
+									<table name="resultstatusmenu" id="resultstatusmenu" class="table">
+										<tbody>
+										</tbody>
+									</table>
+								</div>
+							</div>
+				  		</div>
+				  		<div class="mx-1 dropdown">
+							<button type="button" aria-haspopup="true" aria-expanded="false" class="btn btn-dark" onclick="showmenu(this)"><img src="resources/profile.png" alt="profile" class="rounded-circle" width="30"></button>
+							<div name="usermenu" id="usermenu" tabindex="-1" role="menu" aria-hidden="false" class="ddWidth dropdown-menu" data-popper-placement="bottom-end" style="position: absolute; inset: 0px 0px auto auto; transform: translate(-15px, 52px);">
+								<div class="d-flex gap-3 p-3 border-bottom pt-2 align-items-center">
+									<img src="resources/profile.png" alt="profile" class="rounded-circle" width="30">
+									<h6 class="mb-0" id="name">{{.name}}</h6>
+									<span style="display: none;" id="username">{{.username}}</span>
+								</div>
+							</div>
+				  		</div>
+					</div>
+				</div>
+			</nav>
+			<div class="d-flex">
+				<nav class="navbar navbar-expand-lg bd-sidebar navbar-dark bg-dark">	
+					<button class="navbar-toggler navbar-rwd" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+					<div class="navbar-toggler-icon"></div>
+					</button>	
+					<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+						<div class="navbar-nav mx-1 dropdown pt-3 nvbar-text" id="sidebar">
+						    <ul>
+						        <li class="submenu">
+						            <a>人流影像</a>
+						            <ul>
+						            </ul>
+						        </li>
+						        <li class="submenu">
+						            <a>車流影像</a>
+						            <ul>
+						            </ul>
+						        </li>
+						        <li class="submenu">
+						            <a>公路總局影像</a>
+						            <ul>
+						            </ul>
+						        </li>
+						        <li class="submenu">
+						            <a>直播畫面</a>
+						            <ul>
+						            </ul>
+						        </li>
+						        <li class="submenu">
+						            <a>NVR主機</a>
+						            <ul>
+						            </ul>
+						        </li>
+						        <li class="submenu">
+						            <a>Google 車流</a>
+						            <ul>
+						            </ul>
+						        </li>
+						    </ul>
+						</div>		
+					</div>
+				</nav>
+				<div style="min-width: 70%" class="p-4">
+					<div id="ResultDiv" class="pageWrapper d-md-block">
+						
+						<div style="display:none;" id="retention_icon">
+							<div class="success-circle"></div>
+						</div>
+						<div style="overflow-x:auto;overflow-y:auto;" id="e-map-box">
+							<div id="e-map" style="position: relative;display: flex;flex-direction: column;">
+							</div>
+						</div>
+			    		<div class="box" style="">
+							<img id="rt01" src="" class="rounded mx-auto d-block" style="width: 100%;">
+			    		</div>	
+			    		<div class="videobox" style="">
+							<iframe id="iframe_a" name="iframe_a" frameborder="0" src="" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+			    		</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+<script type="text/javascript" src="js/moment.min.js"></script>
+<script type="text/javascript" src="js/live_picture.js"></script>
+<script type="text/javascript" src="js/count_statistics.js"></script>
+<script type="text/javascript" src="js/popup.js"></script>
+<script type="text/javascript" src="js/menu.js"></script>
+</html>
+
+<script>
+</script>
+
+<style>
+
+</style>

@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="zh-TW">
+<head>
+	
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<!-- Bootstrap CSS -->
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	
+    <link rel="stylesheet" href="css/sweetalert2.min.css">
+    <script type="text/javascript" src="js/sweetalert2.all.js"></script>
+	
+	<link rel="stylesheet" href="css/common.css">
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/fontawesome-free-5.12.0-web/css/all.min.css">
+	<link rel="stylesheet" href="css/_root.css">
+
+	<script type="text/javascript" src="js/moment.min.js"></script>
+	<script type="text/javascript" src="js/daterangepicker.js"></script>
+	<link rel="stylesheet" href="css/daterangepicker.css">
+
+	<script type="text/javascript" src="js/Chart.min.js"></script>
+	<title>雲嘉南濱海國家風景區管理處</title>
+
+</head>
+<body>
+	<div style="display: none" id="get_value">{{.permission}}</div><!--世紀大爛招-->
+	<nav class="topbar navbar navbar-expand-lg navbar-dark bg-dark">
+		<div class="d-flex container-fluid justify-content-between">
+			<button type="button" aria-haspopup="true" aria-expanded="false" class="btn" onclick="window.location.href='overview'"><img src="resources/SCNS.png" alt="profile" width="230"></button>
+			<span id="menuname"></span>	
+			<div class="d-flex align-items-center justify-content-center">
+		  		<div class="mx-1 dropdown">
+					<button type="button" aria-haspopup="true" aria-expanded="false" class="btn btn-dark" onclick="window.location.href='logout'"><img src="resources/logout.png" alt="profile" width="30"></button>
+		  		</div>
+		  		<div class="mx-1 dropdown">
+					<button type="button" aria-haspopup="true" aria-expanded="false" class="btn btn-dark" onclick="showmenu(this)"><img src="resources/dashboard (2).png" alt="profile" width="30"></button>
+					<div tabindex="-1" role="menu" aria-hidden="false" class="ddWidth dropdown-menu table-body" data-popper-placement="bottom-end" style="position: absolute; inset: 0px 0px auto auto; transform: translate(-15px,52px);">
+						<div class="d-flex gap-3 pt-2 align-items-center">
+							<table name="menu" id="menu" class="table">
+								<tbody>
+								</tbody>
+							</table>
+						</div>
+					</div>
+		  		</div>
+		  		<div class="mx-1 dropdown">
+					<button type="button" aria-haspopup="true" aria-expanded="false" class="btn btn-dark" onclick="showmenu(this)"><img src="resources/notifications.png" alt="profile" width="30"></button>
+					<div tabindex="-1" role="menu" aria-hidden="false" class="ddWidth dropdown-menu table-body" data-popper-placement="bottom-end" style="position: absolute; inset: 0px 0px auto auto; transform: translate(-15px,52px);">
+						<div class="d-flex gap-3 pt-2 align-items-center">
+							<table name="resultstatusmenu" id="resultstatusmenu" class="table">
+								<tbody>
+								</tbody>
+							</table>
+						</div>
+					</div>
+		  		</div>
+		  		<div class="mx-1 dropdown">
+					<button type="button" aria-haspopup="true" aria-expanded="false" class="btn btn-dark" onclick="showmenu(this)"><img src="resources/profile.png" alt="profile" class="rounded-circle" width="30"></button>
+					<div name="usermenu" id="usermenu" tabindex="-1" role="menu" aria-hidden="false" class="ddWidth dropdown-menu" data-popper-placement="bottom-end" style="position: absolute; inset: 0px 0px auto auto; transform: translate(-15px, 52px);">
+						<div class="d-flex gap-3 p-3 border-bottom pt-2 align-items-center">
+							<img src="resources/profile.png" alt="profile" class="rounded-circle" width="30">
+							<h6 class="mb-0" id="username">{{.username}}</h6>
+						</div>
+					</div>
+		  		</div>
+			</div>
+		</div>
+	</nav>
+</body>
+<script type="text/javascript" src="js/moment.min.js"></script>
+<script type="text/javascript" src="js/popup.js"></script>
+<script type="text/javascript" src="js/menu.js"></script>
+</html>
+
