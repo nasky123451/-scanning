@@ -19,14 +19,14 @@ function create_overlay(){
                             '</div>'+
                             '<div class="input-group">'+
                                 '<div class="input-bind">'+
-                                    '<input name="password" id="password" type="password" class="popup-form-control" placeholder="密碼">'+
+                                    '<input name="PD" id="PD" type="PD" class="popup-form-control" placeholder="密碼">'+
                                     '<span class="input-group-addon"><i class="fas fa-lock"></i></span>'+
                                 '</div>'+
                                 '<span style="color: red; font-size:90%;">密碼須包含:最少'+pwd_length+'碼,數字,英文,特殊符號</span>'+
                             '</div>'+
                             '<div class="input-group">'+
                                 '<div class="input-bind">'+
-                                    '<input name="checkpass" id="checkpass" type="password" class="popup-form-control" placeholder="確認密碼">'+
+                                    '<input name="checkpass" id="checkpass" type="PD" class="popup-form-control" placeholder="確認密碼">'+
                                     '<span class="input-group-addon"><i class="fas fa-lock"></i></span>'+
                                 '</div>'+
                             '</div>'+
@@ -62,7 +62,7 @@ function create_Modify(){
                 '<form name="popup_form" id="popup_form">'+
                     '<div class="input-group">'+
                         '<div class="input-bind">'+
-                            '<input name="password" id="password" type="password" class="popup-form-control" placeholder="輸入您的密碼">'+
+                            '<input name="PD" id="PD" type="PD" class="popup-form-control" placeholder="輸入您的密碼">'+
                             '<span class="input-group-addon"><i class="fas fa-lock"></i></span>'+
                         '</div>'+
                     '</div>'+
@@ -85,7 +85,7 @@ function create_user_check(mode){
                             '<form name="popup_form" id="popup_form">'+
                                 '<div class="input-group">'+
                                     '<div class="input-bind">'+
-                                        '<input name="password" id="password" type="password" class="popup-form-control" placeholder="輸入您的密碼">'+
+                                        '<input name="PD" id="PD" type="PD" class="popup-form-control" placeholder="輸入您的密碼">'+
                                         '<span class="input-group-addon"><i class="fas fa-lock"></i></span>'+
                                     '</div>'+
                                 '</div>'+
@@ -115,14 +115,14 @@ function create_Modify_User(exit){
                 '<form name="popup_form" id="popup_form">'+
                     '<div class="input-group">'+
                         '<div class="input-bind">'+
-                            '<input name="password" id="password" type="password" class="popup-form-control" placeholder="新密碼">'+
+                            '<input name="PD" id="PD" type="PD" class="popup-form-control" placeholder="新密碼">'+
                             '<span class="input-group-addon"><i class="fas fa-lock"></i></span>'+
                         '</div>'+
                         '<span style="color: red; font-size:90%;">密碼須包含:最少'+pwd_length+'碼,數字,英文,特殊符號</span>'+
                     '</div>'+
                     '<div class="input-group">'+
                         '<div class="input-bind">'+
-                            '<input name="checkpass" id="checkpass" type="password" class="popup-form-control" placeholder="確認新密碼">'+
+                            '<input name="checkpass" id="checkpass" type="PD" class="popup-form-control" placeholder="確認新密碼">'+
                             '<span class="input-group-addon"><i class="fas fa-lock"></i></span>'+
                         '</div>'+
                     '</div>'+
@@ -220,14 +220,14 @@ function create_manage_user(row, id){
                             '</div>'+
                             '<div class="input-group">'+
                                 '<div class="input-bind">'+
-                                    '<input name="password" id="password" type="password" class="popup-form-control" placeholder="密碼">'+
+                                    '<input name="PD" id="PD" type="PD" class="popup-form-control" placeholder="密碼">'+
                                     '<span class="input-group-addon"><i class="fas fa-lock"></i></span>'+
                                 '</div>'+
                                 '<span style="color: red; font-size:90%;">密碼須包含:最少'+pwd_length+'碼,數字,英文,特殊符號</span>'+
                             '</div>'+
                             '<div class="input-group">'+
                                 '<div class="input-bind">'+
-                                    '<input name="checkpass" id="checkpass" type="password" class="popup-form-control" placeholder="確認密碼">'+
+                                    '<input name="checkpass" id="checkpass" type="PD" class="popup-form-control" placeholder="確認密碼">'+
                                     '<span class="input-group-addon"><i class="fas fa-lock"></i></span>'+
                                 '</div>'+
                             '</div>'+
@@ -280,28 +280,28 @@ async function popup_add_user(){
     var element = document.forms['popup_form'];
     var name = element.elements.name.value;
     var number = element.elements.number.value;
-    var password = element.elements.password.value;
+    var PD = element.elements.PD.value;
     var checkpass = element.elements.checkpass.value;
     var permissions = element.elements.permissions.value;
 
-    if (name == "" || number == "" || password == "" || checkpass == ""){
+    if (name == "" || number == "" || PD == "" || checkpass == ""){
         document.getElementsByName("resultmessage")[0].innerHTML = "表格未輸入";
         return;
     }
-    if(!check_password_message(password, checkpass)){
+    if(!check_PD_message(PD, checkpass)){
         return;
     }
 
     number = btoa(number);
-    password = btoa(password);
+    PD = btoa(PD);
 
-    /*var hashPwd = hash(password);
+    /*var hashPwd = hash(PD);
     await hashPwd.then((hash_Pwd) => {
-        password = hash_Pwd;
+        PD = hash_Pwd;
         number = btoa(number);
     });*/
 
-    var user = {user:document.getElementById("name").innerHTML, name:name, id:number, password:password, userpermissions:permissions};
+    var user = {user:document.getElementById("name").innerHTML, name:name, id:number, PD:PD, userpermissions:permissions};
     /*$.post('/adduser', user, function(result, statusText, xhr) {
         if (result.status == -1){
             Swal.fire({
@@ -325,21 +325,21 @@ async function popup_add_user(){
 
 async function popup_modify(){
     var element = document.forms['popup_form'];
-    var password = element.elements.password.value;
+    var PD = element.elements.PD.value;
 
-    if (password == ""){
+    if (PD == ""){
         document.getElementsByName("resultmessage")[0].innerHTML = "表格未輸入";
         return;
     }
 
-    password = btoa(password);
+    PD = btoa(PD);
 
-    /*var hashPwd = hash(password);
+    /*var hashPwd = hash(PD);
     await hashPwd.then((hash_Pwd) => {
-        password = hash_Pwd;
+        PD = hash_Pwd;
     });*/
 
-    var user = {username:btoa(document.getElementById("username").innerHTML), password:password};
+    var user = {username:btoa(document.getElementById("username").innerHTML), PD:PD};
     /*$.post('/checkpass', user, function(result, statusText, xhr) {
         if (result.status == -1){
             Swal.fire({
@@ -359,25 +359,25 @@ async function popup_modify(){
 
 async function popup_modify_user(){
     var element = document.forms['popup_form'];
-    var password = element.elements.password.value;
+    var PD = element.elements.PD.value;
     var checkpass = element.elements.checkpass.value;
 
-    if (password == "" || checkpass == ""){
+    if (PD == "" || checkpass == ""){
         document.getElementsByName("resultmessage")[0].innerHTML = "表格未輸入";
         return;
     }
-    if(!check_password_message(password, checkpass)){
+    if(!check_PD_message(PD, checkpass)){
         return;
     }
 
-    password = btoa(password);
+    PD = btoa(PD);
 
-    /*var hashPwd = hash(password);
+    /*var hashPwd = hash(PD);
     await hashPwd.then((hash_Pwd) => {
-        password = hash_Pwd;
+        PD = hash_Pwd;
     });*/
 
-    var user = {name:document.getElementById("name").innerHTML, username:btoa(document.getElementById("username").innerHTML), password:password};
+    var user = {name:document.getElementById("name").innerHTML, username:btoa(document.getElementById("username").innerHTML), PD:PD};
     /*$.post('/modifypass', user, function(result, statusText, xhr) {
         if (result.status == -1){
             Swal.fire({
@@ -399,28 +399,28 @@ async function popup_manage_modify_user(id){
     var element = document.forms['popup_form'];
     var name = element.elements.name.value;
     var number = element.elements.number.value;
-    var password = element.elements.password.value;
+    var PD = element.elements.PD.value;
     var checkpass = element.elements.checkpass.value;
     var permissions = element.elements.permissions.value;
 
-    if (name == "" || number == "" || password == "" || checkpass == ""){
+    if (name == "" || number == "" || PD == "" || checkpass == ""){
         document.getElementsByName("resultmessage")[0].innerHTML = "表格未輸入";
         return;
     }
-    if(!check_password_message(password, checkpass)){
+    if(!check_PD_message(PD, checkpass)){
         return;
     }
 
     number = btoa(number);
-    password = btoa(password);
+    PD = btoa(PD);
 
-    /*var hashPwd = hash(password);
+    /*var hashPwd = hash(PD);
     await hashPwd.then((hash_Pwd) => {
-        password = hash_Pwd;
+        PD = hash_Pwd;
         number = btoa(number);
     });*/
 
-    var user = {user:document.getElementById("name").innerHTML, id:id, name:name, username:number, password:password, userpermissions:permissions};
+    var user = {user:document.getElementById("name").innerHTML, id:id, name:name, username:number, PD:PD, userpermissions:permissions};
     /*$.post('/modifyAuth', user, function(result, statusText, xhr) {
         if (result.status == -1){
             Swal.fire({
@@ -444,21 +444,21 @@ async function popup_manage_modify_user(id){
 
 async function popup_delete(){
     var element = document.forms['popup_form'];
-    var password = element.elements.password.value;
+    var PD = element.elements.PD.value;
 
-    if (password == ""){
+    if (PD == ""){
         document.getElementsByName("resultmessage")[0].innerHTML = "表格未輸入";
         return;
     }
 
-    password = btoa(password);
+    PD = btoa(PD);
 
-    /*var hashPwd = hash(password);
+    /*var hashPwd = hash(PD);
     await hashPwd.then((hash_Pwd) => {
-        password = hash_Pwd;
+        PD = hash_Pwd;
     });*/
 
-    var user = {name:document.getElementById("name").innerHTML, username:btoa(document.getElementById("username").innerHTML), password:password};
+    var user = {name:document.getElementById("name").innerHTML, username:btoa(document.getElementById("username").innerHTML), PD:PD};
     /*$.post('/checkpass', user, function(result, statusText, xhr) {
         if (result.status == -1){
             Swal.fire({
@@ -467,7 +467,7 @@ async function popup_delete(){
             })
         } else if(result.status == 1){
             delete_overlay();
-            create_Delete_User(password);
+            create_Delete_User(PD);
         } else {
             document.getElementsByName("resultmessage")[0].innerHTML = result.message;
         }
@@ -476,7 +476,7 @@ async function popup_delete(){
     });*/
 }
 
-function create_Delete_User(password){
+function create_Delete_User(PD){
     Swal.fire({
       title: '確認刪除帳號?',
       showCancelButton: true,
@@ -485,7 +485,7 @@ function create_Delete_User(password){
     }).then((result) => {
       /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
-        var user = {username:btoa(document.getElementById("username").innerHTML), password:password};
+        var user = {username:btoa(document.getElementById("username").innerHTML), PD:PD};
         /*$.post('/deleteUser', user, function(result, statusText, xhr) {
             if (result.status == -1){
                 Swal.fire({
@@ -654,17 +654,17 @@ function hash(string) {
   });
 }
 
-function check_password_message(password, check_password){
-    if (password.length < pwd_length){
+function check_PD_message(PD, check_PD){
+    if (PD.length < pwd_length){
         document.getElementsByName("resultmessage")[0].innerHTML = "密碼長度不足";
         return false;
     }
     let pattern = /[a-zA-Z]/;
-    if (!hasSpecialStr(password) || !containsNumber(password) || !pattern.test(password)){
+    if (!hasSpecialStr(PD) || !containsNumber(PD) || !pattern.test(PD)){
        document.getElementsByName("resultmessage")[0].innerHTML = "密碼強度不足";
         return false; 
     }
-    if (password != check_password){
+    if (PD != check_PD){
         document.getElementsByName("resultmessage")[0].innerHTML = "確認密碼錯誤";
         return false;
     }

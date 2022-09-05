@@ -590,7 +590,7 @@ func Writelog(path string, message string){
     defer file.Close()
     //写入文件时，使用带缓存的 *Writer
     write := bufio.NewWriter(file)
-    write.WriteString(message)
+    //write.WriteString(message)
     //Flush将缓存的文件真正写入到文件中
     write.Flush()
 }
