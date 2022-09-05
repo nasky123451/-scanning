@@ -22,7 +22,7 @@ func AddUser(c *gin.Context){
 	user := c.PostForm("user")
 	name := c.PostForm("name")
 	id := c.PostForm("id")
-	pwd := c.PostForm("password")
+	pwd := c.PostForm("PD")
  	userpermissions := c.PostForm("userpermissions")
 
  	user_name, _ := base64.StdEncoding.DecodeString(id)
@@ -50,7 +50,7 @@ func AddUser(c *gin.Context){
 		return
  	}*/
 
- 	exist, _ := check_password(id, shaPWD)
+ 	exist, _ := check_PD(id, shaPWD)
  	if exist {
  		c.JSON(http.StatusOK, gin.H{
 			"status":  2,
@@ -60,7 +60,7 @@ func AddUser(c *gin.Context){
  	}
 
 
-	_, err := db.SqlDB.Exec("INSERT INTO auth(Name,Username,Password,Permissions,Time)VALUES(?,?,?,?,?)", name, id, shaPWD, userpermissions, time.Now().Format("2006-01-02 15:04:05"))
+	_, err := db.SqlDB.Exec("INSERT INTO auth(Name,Username,PD,Permissions,Time)VALUES(?,?,?,?,?)", name, id, shaPWD, userpermissions, time.Now().Format("2006-01-02 15:04:05"))
 	
 	if err != nil {
 		fmt.Println("[ERROR]INSERT auth:", err)
@@ -86,7 +86,7 @@ func ModifyAuth(c *gin.Context){
 	id := c.PostForm("id")
 	name := c.PostForm("name")
 	username := c.PostForm("username")
-	pwd := c.PostForm("password")
+	pwd := c.PostForm("PD")
  	userpermissions := c.PostForm("userpermissions")
 
  	user_name, _ := base64.StdEncoding.DecodeString(username)
@@ -114,7 +114,7 @@ func ModifyAuth(c *gin.Context){
 		return
  	}*/
 
- 	exist, _ := check_password(username, shaPWD)
+ 	exist, _ := check_PD(username, shaPWD)
  	if exist {
  		c.JSON(http.StatusOK, gin.H{
 			"status":  2,
@@ -123,7 +123,7 @@ func ModifyAuth(c *gin.Context){
 		return
  	}
 
-	_, err := db.SqlDB.Query("UPDATE auth SET Name=?, Username=?, Password=?, Permissions=?, Modify=0 WHERE ID=?",name ,username , shaPWD, userpermissions, id)
+	_, err := db.SqlDB.Query("UPDATE auth SET Name=?, Username=?, PD=?, Permissions=?, Modify=0 WHERE ID=?",name ,username , shaPWD, userpermissions, id)
 	
 	if err != nil {
 		fmt.Println("[ERROR]UPDATE auth:", err)
@@ -146,7 +146,7 @@ func ModifyAuth(c *gin.Context){
 
 func Checkpass(c *gin.Context){
 	username := c.PostForm("username")
-	pwd := c.PostForm("password")
+	pwd := c.PostForm("PD")
 
 	user_name, _ := base64.StdEncoding.DecodeString(username)
 	username = string(user_name)
@@ -155,7 +155,7 @@ func Checkpass(c *gin.Context){
 	sum := sha256.Sum256([]byte(pwd))
  	shaPWD := fmt.Sprintf("%x", sum)
 
-	exist, _ := check_password(username, shaPWD)
+	exist, _ := check_PD(username, shaPWD)
  	if !exist {
  		c.JSON(http.StatusOK, gin.H{
 			"status":  2,
@@ -172,7 +172,7 @@ func Checkpass(c *gin.Context){
 func Modifypass(c *gin.Context){
 	name := c.PostForm("name")
 	username := c.PostForm("username")
-	pwd := c.PostForm("password")
+	pwd := c.PostForm("PD")
 
 	user_name, _ := base64.StdEncoding.DecodeString(username)
 	username = string(user_name)
@@ -181,7 +181,7 @@ func Modifypass(c *gin.Context){
 	sum := sha256.Sum256([]byte(pwd))
  	shaPWD := fmt.Sprintf("%x", sum)
 
- 	exist, _ := check_password(username, shaPWD)
+ 	exist, _ := check_PD(username, shaPWD)
  	if exist {
  		c.JSON(http.StatusOK, gin.H{
 			"status":  2,
@@ -190,7 +190,7 @@ func Modifypass(c *gin.Context){
 		return
  	}
 
- 	rows, err := db.SqlDB.Query("UPDATE auth SET Password=? WHERE Username=?", shaPWD, username)
+ 	rows, err := db.SqlDB.Query("UPDATE auth SET PD=? WHERE Username=?", shaPWD, username)
 	defer rows.Close();
 
 	if err != nil {
@@ -227,7 +227,7 @@ func Modifypass(c *gin.Context){
 func DeleteUser(c *gin.Context){
 	name := c.PostForm("name")
 	username := c.PostForm("username")
-	pwd := c.PostForm("password")
+	pwd := c.PostForm("PD")
 
 	user_name, _ := base64.StdEncoding.DecodeString(username)
 	username = string(user_name)
@@ -236,7 +236,7 @@ func DeleteUser(c *gin.Context){
 	sum := sha256.Sum256([]byte(pwd))
  	shaPWD := fmt.Sprintf("%x", sum)
 
- 	_, err := db.SqlDB.Exec("DELETE FROM auth WHERE Username LIKE ? AND Password LIKE ?", username, shaPWD)
+ 	_, err := db.SqlDB.Exec("DELETE FROM auth WHERE Username LIKE ? AND PD LIKE ?", username, shaPWD)
 	
 	if err != nil {
 		fmt.Println("[ERROR]DELETE User:", err)
@@ -302,9 +302,9 @@ func check_username(username string) (bool, error) {
 	return false, nil
 }
 
-func check_password(username string, password string) (bool, error) {
+func check_PD(username string, PD string) (bool, error) {
 	count := 0
-	err := db.SqlDB.QueryRow("SELECT COUNT(*) FROM auth WHERE Username=? AND Password=?", username, password).Scan(&count)
+	err := db.SqlDB.QueryRow("SELECT COUNT(*) FROM auth WHERE Username=? AND PD=?", username, PD).Scan(&count)
 
 	if err != nil {
 		return false, err
@@ -316,10 +316,10 @@ func check_password(username string, password string) (bool, error) {
 	return false, nil
 }
 
-func check_modify(username string, name string, password string) (string, error) {
-	shaPWD := password
+func check_modify(username string, name string, PD string) (string, error) {
+	shaPWD := PD
 	count := ""
-	err := db.SqlDB.QueryRow("SELECT Modify FROM auth WHERE Username=? AND Name=? AND Password=?", username, name, shaPWD).Scan(&count)
+	err := db.SqlDB.QueryRow("SELECT Modify FROM auth WHERE Username=? AND Name=? AND PD=?", username, name, shaPWD).Scan(&count)
 
 	return count, err
 }
@@ -328,24 +328,24 @@ func set_time(username string) error{
 	_, err := db.SqlDB.Query("UPDATE auth SET Time=?  WHERE Username=?", time.Now().Format("2006-01-02 15:04:05"), username)
 	return err
 }
-func set_modify(username string, password string) error{
-	_, err := db.SqlDB.Query("UPDATE auth SET Modify=1  WHERE Username=? AND Password=?", username, password)
+func set_modify(username string, PD string) error{
+	_, err := db.SqlDB.Query("UPDATE auth SET Modify=1  WHERE Username=? AND PD=?", username, PD)
 	return err
 }
 
 var err_frequency float64 = 5.0
 func GetAuth(c *gin.Context) {
 	username := c.PostForm("hash_username")
-	password := c.PostForm("hash_PD")
+	PD := c.PostForm("hash_PD")
 
 	user_name, _ := base64.StdEncoding.DecodeString(username)
 	username = string(user_name)
-	decode_pwd, _ := base64.StdEncoding.DecodeString(password)
-	password = string(decode_pwd)
-	sum := sha256.Sum256([]byte(password))
- 	password = fmt.Sprintf("%x", sum)
+	decode_pwd, _ := base64.StdEncoding.DecodeString(PD)
+	PD = string(decode_pwd)
+	sum := sha256.Sum256([]byte(PD))
+ 	PD = fmt.Sprintf("%x", sum)
 
-	auth := Auth{Username: username, Password: password}
+	auth := Auth{Username: username, PD: PD}
 	uid, err := auth.CheckAuth()
 	permission := Getpermissions(username)
 	name := Getname(username)
@@ -372,7 +372,7 @@ func GetAuth(c *gin.Context) {
 		}
 
 
-		token, err := GenerateToken(uid, name, username, password, permission)
+		token, err := GenerateToken(uid, name, username, PD, permission)
 		if err != nil {
 			log.Fatalln(err)
 		} else {
@@ -381,7 +381,7 @@ func GetAuth(c *gin.Context) {
 			session.Save()
 		}
 		InsertUserLog(uid, "Login", c.ClientIP())
-		Exist, _ := check_modify(username, name, password)
+		Exist, _ := check_modify(username, name, PD)
 		set_counter(username)
 		set_time(username)
 		if Exist == "1"{
@@ -429,7 +429,6 @@ func GetAuth(c *gin.Context) {
 		c.HTML(http.StatusOK, "login.html", gin.H{
 			"message": "帳號或密碼錯誤！", "counter": counter,
 		})
-		PD := password
 		path := "C:/log/登入異常"
 		message := "(登入失敗)輸入帳號:" + username + "輸入密碼:" + PD + "用戶IP:" + get_ip() + "時間:" + time.Now().Format("2006-01-02 15:04:05") + "\n"
 		message += "====================================================================\n"

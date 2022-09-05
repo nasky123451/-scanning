@@ -237,7 +237,7 @@ function updatePagination(total, page){
     {
         $("select[name='page']").append($("<option></option>").attr("value", i + 1).text(i + 1));
         if (page == (i + 1)){
-            $("select[name='page'] option[value=" + page + "]").attr('selected', 'selected');
+            //$("select[name='page'] option[value=" + page + "]").attr('selected', 'selected');
         }
         maxPage = i + 1;
     }

@@ -486,7 +486,7 @@ function create_Delete_User(password){
       /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
         var user = {username:btoa(document.getElementById("username").innerHTML), password:password};
-        $.post('/deleteUser', user, function(result, statusText, xhr) {
+        /*$.post('/deleteUser', user, function(result, statusText, xhr) {
             if (result.status == -1){
                 Swal.fire({
                     icon: 'warning',
@@ -499,7 +499,7 @@ function create_Delete_User(password){
             }
 
             
-        });
+        });*/
       }
     })
 }
